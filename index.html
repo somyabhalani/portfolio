@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Somya Bhalani - Portfolio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap');
+
+::selection {
+  background: rgba(139,115,85,0.2);
+  color: #1c1612;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #8b7355; border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: #1c1612; }
+
+@media print {
+  @page { size: A4; margin: 1cm; }
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
+    cursor: auto !important;
+  }
+  body, html {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background-color: #e2dcd1 !important;
+    background-image: none !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+  .pg {
+    background: #f7f3ee !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .col-wrap {
+    overflow: visible !important;
+  }
+  .left, .right {
+    overflow: visible !important;
+    position: relative !important;
+    top: auto !important;
+  }
+  .left-animate, .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+img,
+.link-dash,
+.belief-num,
+.section-rule,
+.rule {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+body, html {
+  cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='shadow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='0' dy='2' stdDeviation='1.5' flood-opacity='0.3'/%3E%3C/filter%3E%3Cpath filter='url(%23shadow)' d='M4.5 2.5L16.5 14.5H11.5L14.5 21.5L11.5 22.5L8.5 15.5L4.5 19.5V2.5Z' fill='black' stroke='white' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, auto;
+  background-color: #e2dcd1;
+  background-image: 
+    radial-gradient(circle at 10% 0%, rgba(255,255,255,0.8) 0%, transparent 50%),
+    radial-gradient(circle at 90% 100%, rgba(215,200,180,0.8) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(230,221,208,0.5) 0%, transparent 70%);
+  padding: 3rem 2rem;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: #1c1612;
+  overflow-x: hidden;
+}
+
+a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
+  cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='shadow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='0' dy='2' stdDeviation='1.5' flood-opacity='0.3'/%3E%3C/filter%3E%3Cpath filter='url(%23shadow)' d='M4.5 2.5L16.5 14.5H11.5L14.5 21.5L11.5 22.5L8.5 15.5L4.5 19.5V2.5Z' fill='black' stroke='white' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, default !important;
+}
+
+.pg {
+  background: linear-gradient(145deg, rgba(247,243,238,0.85), rgba(242,236,229,0.5));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  min-height: calc(100vh - 6rem);
+  padding: 4.5rem 5rem;
+  border-radius: 32px;
+  box-shadow: 
+    0 40px 80px rgba(90, 70, 50, 0.08), 
+    0 10px 20px rgba(90, 70, 50, 0.04), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 20px rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255,255,255,0.7);
+  max-width: 1060px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.col-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 4rem;
+  align-items: start;
+  position: relative;
+  z-index: 20;
+}
+
+.left { position: sticky; top: 4.5rem; }
+
+.photo-frame {
+  width: 72px; height: 72px;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 8px 24px rgba(90,70,50,0.1), inset 0 1px 0 rgba(255,255,255,0.5);
+  position: relative;
+}
+.photo-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 25%;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); 
+}
+
+.rule {
+  width: 28px; height: 1px;
+  background: #8b7355;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  margin-bottom: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+}
+.eb-prefix-wrap {
+  position: relative;
+  overflow: visible;
+  height: 14px;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.eb-prefix {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 14px;
+  text-transform: uppercase;
+  color: #8b7355;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  position: absolute;
+  top: 0; left: 0;
+  white-space: nowrap;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.eb-suffix {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 14px;
+  text-transform: uppercase;
+  color: #8b7355;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+  margin-left: 5px;
+}
+
+.eb-active {
+  opacity: 1; filter: blur(0px); transform: translateX(0);
+}
+.eb-inactive-left {
+  opacity: 0; filter: blur(6px); transform: translateX(-8px);
+}
+.eb-inactive-right {
+  opacity: 0; filter: blur(6px); transform: translateX(8px);
+}
+
+.name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: #1c1612;
+  line-height: 1.05;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+  transition: text-shadow 0.2s ease;
+  display: inline-block;
+}
+
+.role {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  color: #8b7355;
+  margin-bottom: 2.25rem;
+  letter-spacing: 0.01em;
+  display: inline-block;
+}
+
+.bio {
+  font-size: 13.5px;
+  line-height: 1.95;
+  color: #5c5046;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.bio em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 400;
+  color: #1c1612;
+}
+
+.left-links { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.left-link {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b7355;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px;
+  width: fit-content;
+  transition: color 0.2s ease;
+}
+.link-dash {
+  font-size: 10px; opacity: 0.5;
+}
+.left-link:hover {
+  color: transparent;
+  -webkit-text-stroke: 0.5px #1c1612;
+  cursor: text !important;
+}
+
+.section-rule {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+.section-label-text {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8b7355;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.section-rule-line {
+  flex: 1; height: 1px; background: rgba(139,115,85,0.2);
+}
+
+.proj {
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(139,115,85,0.15);
+  position: relative;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s,
+              opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center left;
+  z-index: 1;
+  will-change: transform, filter, opacity;
+  transform: translateZ(0);
+}
+.proj:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.proj::before {
+  content: "";
+  position: absolute;
+  top: -2.5rem; left: -2.5rem; right: -4rem; bottom: -2.5rem;
+  border-radius: 32px;
+  background: rgba(250, 246, 239, 0.95);
+  box-shadow: 
+    0 50px 100px rgba(90, 70, 50, 0.15),
+    0 10px 30px rgba(90, 70, 50, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.proj:hover {
+  transform: scale(1.08) translateX(25px) translateY(-5px) translateZ(0);
+  border-bottom-color: transparent;
+  z-index: 100;
+}
+
+.proj:hover::before {
+  opacity: 1;
+}
+
+.right:has(.proj:hover) .proj:not(:hover) {
+  opacity: 0.35;
+  filter: blur(5px);
+  transform: scale(0.95) translateX(-10px) translateZ(0);
+}
+
+.proj-header {
+  display: flex; align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.proj-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: #1c1612;
+}
+
+.proj-tag {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(139,115,85,0.7);
+  font-weight: 500;
+}
+
+.proj-desc {
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: #5c5046;
+  margin-bottom: 1.25rem;
+  font-weight: 300;
+}
+
+.proj-link {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1c1612;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding-bottom: 4px;
+  position: relative;
+  transform: translateZ(25px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.proj-link::before {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+  background: rgba(28,22,18,0.15);
+}
+.proj-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+  background: #8b7355;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.proj-link:hover {
+  color: #8b7355;
+  letter-spacing: 0.18em;
+}
+.proj-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.div-full { height: 1px; background: rgba(139,115,85,0.15); margin: 3rem 0; }
+
+.belief-item { 
+  margin-bottom: 2rem; 
+}
+.belief-num {
+  font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(139,115,85,0.7);
+  margin-bottom: 0.5rem; font-weight: 500;
+  transition: letter-spacing 0.7s cubic-bezier(0.7, 0, 0.3, 1), color 0.4s;
+}
+.belief-item:hover .belief-num {
+  letter-spacing: 0.35em;
+  color: #1c1612;
+}
+.belief-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px; font-style: italic;
+  color: #2d2520; line-height: 1.7; font-weight: 400;
+}
+
+.quote-wrap {
+  background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin: 3rem 0;
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.quote-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.7), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.quote-wrap:hover::after {
+  opacity: 1;
+}
+.quote-wrap:hover {
+  transform: scale(1.02);
+}
+.quote-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-style: italic;
+  color: #1c1612; line-height: 1.6;
+  margin-bottom: 1rem; font-weight: 400;
+  position: relative; z-index: 2;
+}
+.quote-attr {
+  font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #8b7355; font-weight: 500;
+  position: relative; z-index: 2;
+}
+
+.contact-wrap { padding-top: 1rem; }
+.contact-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-style: italic;
+  color: #5c5046; margin-bottom: 0.85rem; font-weight: 400;
+}
+.contact-emails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.contact-email {
+  font-size: 13.5px; 
+  color: #8b7355;
+  text-decoration: none; 
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+.contact-email:hover {
+  color: transparent;
+  -webkit-text-stroke: 0.5px #1c1612;
+}
+
+.film-tag {
+  font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: rgba(139,115,85,0.5);
+  margin-top: 4rem; font-weight: 500;
+  text-align: right;
+  cursor: default;
+}
+
+.location-swap {
+  display: inline-grid;
+  overflow: hidden;
+  color: rgba(139,115,85,0.8);
+  justify-items: end;
+}
+.location-main {
+  grid-area: 1/1;
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.location-swap::after {
+  content: attr(data-hover);
+  grid-area: 1/1;
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.film-tag:hover .location-main {
+  transform: translateY(-100%);
+}
+.film-tag:hover .location-swap::after {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes fadeInBlur {
+  0% { opacity: 0; filter: blur(12px); transform: scale(0.98); }
+  100% { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+
+.left-animate {
+  opacity: 0;
+  animation: fadeInBlur 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.left-animate:nth-child(1) { animation-delay: 0.1s; }
+.left-animate:nth-child(2) { animation-delay: 0.15s; }
+.left-animate:nth-child(3) { animation-delay: 0.2s; }
+.left-animate:nth-child(4) { animation-delay: 0.25s; }
+.left-animate:nth-child(5) { animation-delay: 0.3s; }
+.left-animate:nth-child(6) { animation-delay: 0.35s; }
+
+.reveal {
+  opacity: 0;
+  transform: scale(0.96);
+  filter: blur(12px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+
+/* Skeleton Loading System for Images Only */
+.skeleton {
+  background: #d4cdc1 !important;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: translateX(-100%);
+  animation: skeletonShimmer 1.5s infinite ease-in-out;
+  z-index: 10;
+}
+@keyframes skeletonShimmer {
+  100% { transform: translateX(100%); }
+}
+.photo-frame.skeleton img {
+  opacity: 0;
+}
+
+@media (max-width: 900px) {
+  body, html { padding: 0.75rem 0.5rem; }
+  .pg { 
+    border-radius: 32px; 
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: 
+      0 20px 40px rgba(90, 70, 50, 0.08), 
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 0 20px rgba(255, 255, 255, 0.6);
+    min-height: calc(100vh - 1.5rem);
+    padding: 3.5rem 2rem;
+  }
+  .col-wrap {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .left { position: relative; top: 0; }
+  .proj { transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="pg">
+<div class="col-wrap">
+
+<div class="left">
+  <div class="photo-frame left-animate skeleton" id="profile-frame">
+    <img id="port-img" src="https://plain-apac-prod-public.komododecks.com/202607/05/Su7WAwrQe16LTaBVatYp/image.jpg" alt="Somya Bhalani"/>
+  </div>
+
+  <div class="rule left-animate"></div>
+  <div class="eyebrow left-animate">
+    <div class="eb-prefix-wrap" id="eb-wrap">
+      <span class="eb-prefix eb-active" id="eb-1">AI SOLUTIONS</span>
+      <span class="eb-prefix eb-inactive-right" id="eb-2">INTELLIGENCE</span>
+    </div>
+    <span class="eb-suffix">ARCHITECT</span>
+  </div><br>
+  <div class="name left-animate">Somya<br>Bhalani</div><br>
+  <div class="role left-animate">Founder, Ananta Labs</div>
+
+  <p class="bio left-animate">
+    <em>Architecting intelligence that reasons, perceives, and acts.</em><br><br>
+    Most AI today is a wrapper around someone else's wrapper. At Ananta Labs, I go underneath — to the architecture that decides how a system reasons, what it perceives, where it acts.<br><br>
+    No templates, because there aren't.<br>
+    No shortcuts. First principles, every time.
+  </p>
+
+  <div class="left-links left-animate">
+    <a class="left-link" href="https://www.anantalabs.app" target="_blank">
+      <span class="link-dash">—</span>
+      anantalabs.app
+    </a>
+    <a class="left-link" href="https://github.com/somyabhalani" target="_blank">
+      <span class="link-dash">—</span>
+      github
+    </a>
+    <a class="left-link" href="mailto:somyabhalani@gmail.com">
+      <span class="link-dash">—</span>
+      somyabhalani@gmail.com
+    </a>
+    <a class="left-link" href="mailto:hello@anantalabs.app">
+      <span class="link-dash">—</span>
+      hello@anantalabs.app
+    </a>
+  </div>
+
+  <div class="section-rule left-animate" style="margin-top: 4.5rem; margin-bottom: 2rem;">
+    <span class="section-label-text">Thesis</span>
+    <div class="section-rule-line"></div>
+  </div>
+
+  <div class="belief-item left-animate">
+    <div class="belief-num">01</div>
+    <div class="belief-text">Most AI being built today is not intelligence. It is retrieval dressed up as reasoning. The difference matters more than most teams want to admit.</div>
+  </div>
+  <div class="belief-item left-animate">
+    <div class="belief-num">02</div>
+    <div class="belief-text">Memory is the actual bottleneck. Anyone can generate text. Designing a system that remembers, updates, and forgets information correctly is the difference between a toy and a tool.</div>
+  </div>
+  <div class="belief-item left-animate">
+    <div class="belief-num">03</div>
+    <div class="belief-text">Most agencies assemble. They pick a template, plug in an API, call it a product. Architecture is the set of decisions that cannot be copied — because they were made specifically for this problem, this constraint, this reality.</div>
+  </div>
+</div>
+
+<div class="right">
+
+  <div class="section-rule reveal">
+    <span class="section-label-text">Work</span>
+    <div class="section-rule-line"></div>
+  </div>
+
+  <div class="proj reveal">
+    <div class="proj-header">
+      <span class="proj-name">Kiwi AI</span>
+      <span class="proj-tag">RAG · SaaS · Live</span>
+    </div>
+    <p class="proj-desc">
+      An intelligent chatbot builder that transforms any collection of documents, PDFs, or website links into a fully custom AI assistant — trained on your knowledge, embedded onto any website with a single line of code. No technical knowledge required. The engine underneath handles hybrid retrieval, context management, and response calibration at a depth most custom implementations never reach.
+    </p>
+    <a class="proj-link" href="https://kiwi-ai-rho.vercel.app/" target="_blank">
+      Open Kiwi AI ↗
+    </a>
+  </div>
+
+  <div class="proj reveal">
+    <div class="proj-header">
+      <span class="proj-name">Ananta Memory</span>
+      <span class="proj-tag">Extension · Offline · Privacy</span>
+    </div>
+    <p class="proj-desc">
+      A privacy-first browser extension that quietly saves everything you read into a fully offline, local database. Search your entire reading history instantly — no cloud, no server, no compromise. Built for absolute data ownership. Everything stays on your device, completely yours, always searchable, never exposed.
+    </p>
+    <a class="proj-link" href="https://ananta-extension.vercel.app/" target="_blank">
+      Open Ananta Memory ↗
+    </a>
+  </div>
+
+  <div class="proj reveal">
+    <div class="proj-header">
+      <span class="proj-name">Tile Extractor</span>
+      <span class="proj-tag">PDF Parsing · Utility</span>
+    </div>
+    <p class="proj-desc">
+      A heavy-duty utility engineered for the lossless extraction of high-quality tile product images directly from large PDF catalogues. Built for sheer performance and precision, bypassing manual workflows entirely to automate large-scale asset recovery without compromising on resolution.
+    </p>
+    <div style="display: flex; gap: 2rem;">
+      <a class="proj-link" href="https://tile-extractor-r3ce.onrender.com/" target="_blank">
+        Open Tile Extractor ↗
+      </a>
+      <a class="proj-link" href="https://tile-extractor-r3ce.onrender.com/engine.html" target="_blank">
+        Framework ↗
+      </a>
+    </div>
+  </div>
+
+  <div class="div-full reveal"></div>
+
+  <div class="quote-wrap reveal">
+    <div class="quote-text">"The closer we get to mirroring the human brain in silicon, the more we appreciate the quiet miracle of human values."</div>
+    <div class="quote-attr">— Somya Bhalani · Founder, Ananta Labs</div>
+  </div>
+
+  <div class="contact-wrap reveal">
+    <div class="contact-line">If the work makes sense to you, reach out.</div>
+    <div class="contact-emails">
+      <a class="contact-email" href="mailto:somyabhalani@gmail.com">somyabhalani@gmail.com</a>
+      <a class="contact-email" href="mailto:hello@anantalabs.app">hello@anantalabs.app</a>
+    </div>
+  </div>
+
+  <div class="film-tag reveal">
+    <span class="location-swap" data-hover="Vadodara, India">
+      <span class="location-main">22°18′N 73°11′E</span>
+    </span>
+  </div>
+
+</div>
+</div>
+</div>
+
+<script>
+// True Dynamic Image Skeleton Loader
+const photoFrame = document.getElementById('profile-frame');
+const img = document.getElementById('port-img');
+
+img.onerror = function(){
+  this.src='https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
+};
+
+// If the image is already cached and loaded when the script runs, remove the skeleton instantly.
+if (img.complete) {
+  photoFrame.classList.remove('skeleton');
+} else {
+  // Otherwise, wait for it to finish downloading over the network.
+  img.addEventListener('load', () => {
+    photoFrame.classList.remove('skeleton');
+  });
+}
+
+// Eyebrow Dynamic Width & Crossfade Animation
+const ebWrap = document.getElementById('eb-wrap');
+const eb1 = document.getElementById('eb-1');
+const eb2 = document.getElementById('eb-2');
+let isEb1 = true;
+
+// Initialize width accurately on load
+window.addEventListener('load', () => {
+  ebWrap.style.width = eb1.getBoundingClientRect().width + 'px';
+  
+  setInterval(() => {
+    isEb1 = !isEb1;
+    if(isEb1) {
+      eb1.className = 'eb-prefix eb-active';
+      eb2.className = 'eb-prefix eb-inactive-right';
+      ebWrap.style.width = eb1.getBoundingClientRect().width + 'px';
+    } else {
+      eb1.className = 'eb-prefix eb-inactive-left';
+      eb2.className = 'eb-prefix eb-active';
+      ebWrap.style.width = eb2.getBoundingClientRect().width + 'px';
+    }
+  }, 3500); // Trigger every 3.5 seconds
+});
+
+// Scroll Reveal
+const observerOptions = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.15
+};
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => {
+  observer.observe(el);
+});
+
+// Niche Interaction: Magnetic Quote Wrap Spotlight
+const quoteWrap = document.querySelector('.quote-wrap');
+quoteWrap.addEventListener('mousemove', e => {
+  const rect = quoteWrap.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  quoteWrap.style.setProperty('--mouse-x', `${x}px`);
+  quoteWrap.style.setProperty('--mouse-y', `${y}px`);
+});
+
+// Niche Interaction: Parallax Profile Image
+photoFrame.addEventListener('mousemove', e => {
+  const rect = photoFrame.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+  // Move image in opposite direction of mouse
+  img.style.transform = `scale(1.15) translate(${x * -10}px, ${y * -10}px)`;
+});
+photoFrame.addEventListener('mouseleave', () => {
+  img.style.transform = `scale(1) translate(0px, 0px)`;
+});
+
+// Niche Interaction: Dynamic text shadow on Name
+const nameEl = document.querySelector('.name');
+document.addEventListener('mousemove', e => {
+  if(window.innerWidth <= 900) return;
+  const x = (e.clientX / window.innerWidth - 0.5) * -15;
+  const y = (e.clientY / window.innerHeight - 0.5) * -15;
+  nameEl.style.textShadow = `${x}px ${y}px 15px rgba(139,115,85,0.15)`;
+});
+
+</script>
+
+
+
+</body>
+</html>

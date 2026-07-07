@@ -639,27 +639,39 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   align-items: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
 }
 .modal-overlay.active {
   opacity: 1;
   pointer-events: auto;
 }
 .modal-card {
-  background: rgba(255,255,255,0.4);
-  border: 1px solid rgba(255,255,255,0.7);
-  box-shadow: 0 32px 64px rgba(90,70,50,0.05), inset 0 1px 0 rgba(255,255,255,1);
-  border-radius: 20px;
-  backdrop-filter: blur(16px);
+  background: linear-gradient(145deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.15) 100%);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-right: 1px solid rgba(255,255,255,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 
+    0 50px 100px rgba(90, 70, 50, 0.35), 
+    0 20px 40px rgba(90, 70, 50, 0.25), 
+    inset 0 2px 0 rgba(255, 255, 255, 1), 
+    inset 2px 0 0 rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  backdrop-filter: blur(24px);
   width: 90%;
   max-width: 650px;
-  padding: 2.5rem 3rem;
+  padding: 3rem 3.5rem;
   position: relative;
-  transform: translateY(20px);
-  transition: transform 0.4s ease;
+  
+  /* Smooth blur-to-clear animation */
+  opacity: 0;
+  filter: blur(12px);
+  transform: scaleX(1.05) scaleY(0.95);
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s ease-out, opacity 0.5s ease-out;
 }
 .modal-overlay.active .modal-card {
-  transform: translateY(0);
+  opacity: 1;
+  filter: blur(0);
+  transform: scaleX(1) scaleY(1);
 }
 .modal-close {
   position: absolute;
@@ -684,6 +696,22 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   margin-bottom: 1.25rem;
   position: relative;
 }
+.form-group::before {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+  background: rgba(139,115,85,0.3);
+}
+.form-group::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+  background: #8b7355;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.form-group:hover::after,
+.form-group:focus-within::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
 .form-input {
   width: 100%;
   background: transparent;
@@ -694,10 +722,48 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   font-family: 'Inter', sans-serif;
   font-size: 15px;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+}
+.form-input::placeholder {
+  color: rgba(28,22,18,0.5);
 }
 .form-input:focus {
-  border-bottom-color: #8b7355;
+  border-bottom: 1px solid #8b7355;
+}
+.form-input.invalid {
+  border-bottom: 1px solid #b85a44;
+  color: #b85a44;
+}
+.form-input.invalid::placeholder {
+  color: rgba(184, 90, 68, 0.7);
+}
+
+.form-error-msg {
+  color: #b85a44;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  display: none;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+.form-error-msg.active {
+  display: block;
+  animation: shake 0.4s;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+}
+
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover, 
+.form-input:-webkit-autofill:focus, 
+.form-input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: #1c1612 !important;
 }
 .form-input::placeholder {
   color: rgba(92, 80, 70, 0.55);
@@ -708,51 +774,117 @@ textarea.form-input {
   height: 50px;
 }
 .form-submit {
-  width: 100%;
-  background: transparent;
+  display: block;
+  width: max-content;
+  min-width: 240px;
+  margin: 2rem auto 0 auto;
+  
+  /* Liquid Glass Base */
+  background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  
+  /* Glass Borders */
+  border: 1px solid rgba(255,255,255,0.8);
+  border-bottom: 1px solid rgba(139,115,85,0.2);
+  border-right: 1px solid rgba(139,115,85,0.2);
+  
+  /* Glass Shadow */
+  box-shadow: 
+    0 8px 16px rgba(90, 70, 50, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -2px 2px rgba(139,115,85,0.1);
+    
   color: #1c1612;
-  border: 1px solid rgba(139,115,85,0.4);
-  padding: 1rem;
+  padding: 1rem 3rem;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   cursor: pointer;
-  margin-top: 1.5rem;
   border-radius: 50px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .form-submit:hover {
-  background: #8b7355;
+  transform: scale(0.98);
+  background: linear-gradient(135deg, #a38968 0%, #8b7355 100%);
   color: #f5f0eb;
-  border-color: #8b7355;
-  letter-spacing: 0.14em;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(139,115,85,0.15);
+  border-color: rgba(255,255,255,0.1);
+  box-shadow: 
+    0 10px 30px rgba(139, 115, 85, 0.25),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 4px rgba(50, 35, 20, 0.2);
+}
+.form-submit:active {
+  transform: scale(0.95);
+  background: linear-gradient(135deg, #8b7355 0%, #766045 100%);
+  box-shadow: 
+    0 0 0 rgba(139, 115, 85, 0),
+    inset 0 6px 15px rgba(50, 35, 20, 0.5);
+}
+
+.form-submit.loading {
+  background: linear-gradient(135deg, rgba(139, 115, 85, 0.2) 0%, rgba(139, 115, 85, 0.4) 100%);
+  color: #8b7355;
+  animation: pulse-loading 1.5s infinite;
+  pointer-events: none;
+}
+@keyframes pulse-loading {
+  0% { opacity: 0.7; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.7; transform: scale(0.98); }
+}
+
+.form-submit.success {
+  background: linear-gradient(135deg, #8b7355 0%, #6b5840 100%);
+  color: #f5f0eb;
+  border-color: rgba(255,255,255,0.2);
+  transform: scale(0.95);
+  box-shadow: inset 0 4px 10px rgba(50, 35, 20, 0.4);
+  pointer-events: none;
 }
 
 /* Modal Button override */
 button.contact-btn {
-  background: transparent;
-  border: 1px solid rgba(139,115,85,0.4);
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-bottom: 1px solid rgba(139,115,85,0.2);
+  border-right: 1px solid rgba(139,115,85,0.2);
+  box-shadow: 
+    0 8px 16px rgba(90, 70, 50, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -2px 2px rgba(139,115,85,0.1);
   color: #8b7355;
+  padding: 1.25rem 3.5rem;
   font-family: 'Inter', sans-serif;
   font-size: 14px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 1rem 2.5rem;
+  letter-spacing: 0.12em;
   cursor: pointer;
   border-radius: 50px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  margin-top: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-button.contact-btn:hover {
-  background: #8b7355;
-  color: #f5f0eb;
-  border-color: #8b7355;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(139,115,85,0.15);
+.contact-btn:hover {
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.85);
+  color: #8b7355;
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 10px 30px rgba(139, 115, 85, 0.15),
+    inset 0 2px 4px rgba(255, 255, 255, 1),
+    inset 0 -2px 4px rgba(139, 115, 85, 0.1);
+}
+.contact-btn:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 0 0 rgba(139, 115, 85, 0),
+    inset 0 6px 15px rgba(139, 115, 85, 0.2);
 }
 </style>
 </head>
@@ -997,7 +1129,8 @@ document.addEventListener('mousemove', e => {
   <div class="modal-card">
     <button class="modal-close" id="close-modal-btn">×</button>
     <div class="modal-title">Start the conversation</div>
-    <form id="contact-form">
+    <div id="form-error-msg" class="form-error-msg"></div>
+    <form id="contact-form" novalidate>
       <div class="form-group">
         <input type="text" class="form-input" id="form-name" placeholder="Name" required>
       </div>
@@ -1011,8 +1144,14 @@ document.addEventListener('mousemove', e => {
         <input type="text" class="form-input" id="form-company" placeholder="Company (Optional)">
       </div>
       <div class="form-group">
-        <textarea class="form-input" id="form-message" placeholder="Your message..." required></textarea>
+        <textarea class="form-input" id="form-message" placeholder="Leave a message..." required></textarea>
       </div>
+      
+      <!-- Anti-Spam Honeypot (Hidden from humans, bots will fill it) -->
+      <div style="opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1;">
+        <input type="text" id="form-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      
       <button type="submit" class="form-submit">Send Inquiry</button>
     </form>
   </div>
@@ -1038,6 +1177,116 @@ document.addEventListener('mousemove', e => {
   closeModalBtn.addEventListener('click', closeModal);
   modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) closeModal();
+  });
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD8iV2VKIgh3Yv0DZiInmtRsNj-yS32i0c",
+    authDomain: "somya-card-portfoli.firebaseapp.com",
+    projectId: "somya-card-portfoli",
+    storageBucket: "somya-card-portfoli.firebasestorage.app",
+    messagingSenderId: "897452309600",
+    appId: "1:897452309600:web:e0c708054834587f141705",
+    measurementId: "G-56TDPKNM96"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const form = document.getElementById('contact-form');
+  const submitBtn = form.querySelector('.form-submit');
+  
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // 1. Custom Form Validation
+    const errorMsg = document.getElementById('form-error-msg');
+    document.querySelectorAll('.form-input').forEach(input => input.classList.remove('invalid'));
+    errorMsg.classList.remove('active');
+
+    if (!form.checkValidity()) {
+      let firstInvalid = null;
+      document.querySelectorAll('.form-input[required]').forEach(input => {
+        if (!input.value.trim()) {
+          input.classList.add('invalid');
+          if (!firstInvalid) firstInvalid = input;
+        }
+      });
+      if (firstInvalid) {
+        firstInvalid.focus();
+        errorMsg.textContent = "Please fill in all required fields.";
+        errorMsg.classList.add('active');
+      }
+      return;
+    }
+
+    // 2. Honeypot Check (Bot trap)
+    const honeypot = document.getElementById('form-website').value;
+    if (honeypot) {
+      // It's a bot, fake a success state
+      console.warn("Bot detected.");
+      return form.reset();
+    }
+
+    // 2. Local Rate Limit (1 inquiry per hour per browser)
+    const lastSent = localStorage.getItem('lastInquirySent');
+    if (lastSent && (Date.now() - parseInt(lastSent)) < 3600000) {
+      alert("You have already sent an inquiry recently. Please wait before sending another.");
+      return;
+    }
+    
+    // UI Loading state
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = "SENDING...";
+    submitBtn.classList.add('loading');
+
+    const name = document.getElementById('form-name').value;
+    const email = document.getElementById('form-email').value;
+    const number = document.getElementById('form-number').value;
+    const company = document.getElementById('form-company').value;
+    const message = document.getElementById('form-message').value;
+
+    try {
+      await addDoc(collection(db, "inquiries"), {
+        name,
+        email,
+        number: number || "N/A",
+        company: company || "N/A",
+        message,
+        createdAt: serverTimestamp()
+      });
+      
+      // Update Rate Limit Timer
+      localStorage.setItem('lastInquirySent', Date.now().toString());
+      
+      // UI Success state
+      submitBtn.classList.remove('loading');
+      submitBtn.classList.add('success');
+      submitBtn.innerText = "MESSAGE SENT";
+      
+      setTimeout(() => {
+        // Reset form and close modal
+        form.reset();
+        submitBtn.innerText = originalText;
+        submitBtn.classList.remove('success');
+        
+        const modalOverlay = document.getElementById('contact-modal');
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }, 2000);
+      
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      submitBtn.classList.remove('loading');
+      submitBtn.innerText = "ERROR - TRY AGAIN";
+      setTimeout(() => {
+        submitBtn.innerText = originalText;
+      }, 3000);
+    }
   });
 </script>
 

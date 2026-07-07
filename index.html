@@ -627,6 +627,117 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   .quote-text { font-size: 18px; }
   .contact-line { font-size: 20px; }
 }
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(18, 14, 11, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-card {
+  background: #1c1612;
+  border: 1px solid rgba(139,115,85,0.2);
+  width: 90%;
+  max-width: 500px;
+  padding: 3rem;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+.modal-overlay.active .modal-card {
+  transform: translateY(0);
+}
+.modal-close {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  background: none; border: none;
+  color: #8b7355;
+  font-size: 28px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.modal-close:hover { color: #f5f0eb; }
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  color: #f5f0eb;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.form-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(139,115,85,0.3);
+  padding: 0.8rem 0;
+  color: #f5f0eb;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.form-input:focus {
+  border-bottom-color: #8b7355;
+}
+.form-input::placeholder {
+  color: rgba(245, 240, 235, 0.4);
+}
+textarea.form-input {
+  resize: none;
+  height: 80px;
+}
+.form-submit {
+  width: 100%;
+  background: #8b7355;
+  color: #120e0b;
+  border: none;
+  padding: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s ease;
+}
+.form-submit:hover {
+  background: #a38968;
+}
+
+/* Modal Button override */
+button.contact-btn {
+  background: transparent;
+  border: 1px solid rgba(139,115,85,0.4);
+  color: #8b7355;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 1rem 2.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+}
+button.contact-btn:hover {
+  background: rgba(139,115,85,0.1);
+  border-color: #8b7355;
+}
 </style>
 </head>
 <body>
@@ -755,9 +866,7 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 
   <div class="contact-wrap reveal">
     <div class="contact-line">Building systems that reason.</div>
-    <div class="contact-emails">
-      <a class="contact-email" href="mailto:somyabhalani@gmail.com">somyabhalani@gmail.com</a>
-    </div>
+    <button class="contact-btn" id="open-modal-btn">Reach Out</button>
   </div>
 
   <div class="film-tag reveal">
@@ -866,6 +975,55 @@ document.addEventListener('mousemove', e => {
 </script>
 
 
+
+<!-- Modal Structure -->
+<div class="modal-overlay" id="contact-modal">
+  <div class="modal-card">
+    <button class="modal-close" id="close-modal-btn">×</button>
+    <div class="modal-title">Start the conversation</div>
+    <form id="contact-form">
+      <div class="form-group">
+        <input type="text" class="form-input" id="form-name" placeholder="Name" required>
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-input" id="form-email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-input" id="form-number" placeholder="Phone Number (Optional)">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-input" id="form-company" placeholder="Company (Optional)">
+      </div>
+      <div class="form-group">
+        <textarea class="form-input" id="form-message" placeholder="How can we help?" required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Inquiry</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Modal Logic
+  const modalOverlay = document.getElementById('contact-modal');
+  const openModalBtn = document.getElementById('open-modal-btn');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+
+  function openModal() {
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // prevent background scrolling
+  }
+
+  function closeModal() {
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  openModalBtn.addEventListener('click', openModal);
+  closeModalBtn.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+</script>
 
 </body>
 </html>

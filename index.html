@@ -124,11 +124,25 @@ body, html {
     radial-gradient(circle at 10% 0%, rgba(255,255,255,0.8) 0%, transparent 50%),
     radial-gradient(circle at 90% 100%, rgba(215,200,180,0.8) 0%, transparent 60%),
     radial-gradient(circle at 50% 50%, rgba(230,221,208,0.5) 0%, transparent 70%);
-  padding: 3rem 2rem;
-  min-height: 100vh;
+  padding: 1rem;
+  height: 100vh;
   font-family: 'Inter', sans-serif;
   color: #1c1612;
-  overflow-x: hidden;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+@media (max-height: 800px) {
+  .pg { padding: 2rem 3rem; }
+}
+@media (max-height: 700px) {
+  body, html { font-size: 14px; }
+}
+@media (max-height: 600px) {
+  body, html { font-size: 12px; }
 }
 
 a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
@@ -139,8 +153,10 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   background: linear-gradient(145deg, rgba(247,243,238,0.85), rgba(242,236,229,0.5));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  min-height: calc(100vh - 6rem);
-  padding: 4.5rem 5rem;
+  height: 100%;
+  max-height: calc(100vh - 2rem);
+  width: 100%;
+  padding: 2.5rem 4rem;
   border-radius: 32px;
   box-shadow: 
     0 40px 80px rgba(90, 70, 50, 0.08), 
@@ -149,28 +165,40 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
     inset 0 -1px 0 rgba(255, 255, 255, 0.2),
     inset 0 0 20px rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(255,255,255,0.7);
-  max-width: 1060px;
-  margin: 0 auto;
+  max-width: 1450px;
   position: relative;
-  overflow: hidden;
 }
 
 .col-wrap {
   display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: 4rem;
-  align-items: start;
+  grid-template-columns: 350px 1fr;
+  gap: 3rem;
+  align-items: center;
+  height: 100%;
   position: relative;
   z-index: 20;
 }
 
-.left { position: sticky; top: 4.5rem; }
+.left { 
+  position: relative; 
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+}
 
 .photo-frame {
   width: 72px; height: 72px;
   border-radius: 24px;
   overflow: hidden;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   border: 1px solid rgba(255,255,255,0.8);
   box-shadow: 0 8px 24px rgba(90,70,50,0.1), inset 0 1px 0 rgba(255,255,255,0.5);
   position: relative;
@@ -184,11 +212,11 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 .rule {
   width: 28px; height: 1px;
   background: #8b7355;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .eyebrow {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   display: inline-flex;
   align-items: center;
 }
@@ -237,11 +265,11 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 
 .name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 52px;
+  font-size: 3.25rem;
   font-weight: 300;
   color: #1c1612;
   line-height: 1.05;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   letter-spacing: -0.01em;
   transition: text-shadow 0.2s ease;
   display: inline-block;
@@ -249,27 +277,27 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 
 .role {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-style: italic;
   font-weight: 400;
   color: #8b7355;
-  margin-bottom: 2.25rem;
+  margin-bottom: 1.25rem;
   letter-spacing: 0.01em;
   display: inline-block;
 }
 
 .bio {
-  font-size: 13.5px;
+  font-size: 0.9rem;
   line-height: 1.95;
   color: #5c5046;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   font-weight: 300;
 }
 
 .bio em {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   color: #1c1612;
 }
@@ -277,7 +305,7 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 .left-links { display: flex; flex-direction: column; gap: 0.75rem; }
 
 .left-link {
-  font-size: 11px;
+  font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #8b7355;
@@ -288,7 +316,7 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   transition: color 0.2s ease;
 }
 .link-dash {
-  font-size: 10px; opacity: 0.5;
+  font-size: 0.65rem; opacity: 0.5;
 }
 .left-link:hover {
   color: transparent;
@@ -298,10 +326,10 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 
 .section-rule {
   display: flex; align-items: center; gap: 1rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 1rem;
 }
 .section-label-text {
-  font-size: 10px;
+  font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #8b7355;
@@ -313,12 +341,8 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 }
 
 .proj {
-  margin-bottom: 3rem;
-  padding-bottom: 3rem;
-  border-bottom: 1px solid rgba(139,115,85,0.15);
   position: relative;
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-              border-color 0.4s,
               opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
               filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: center left;
@@ -326,12 +350,11 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   will-change: transform, filter, opacity;
   transform: translateZ(0);
 }
-.proj:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
 .proj::before {
   content: "";
   position: absolute;
-  top: -2.5rem; left: -2.5rem; right: -4rem; bottom: -2.5rem;
+  top: -1.5rem; left: -1.5rem; right: -1.5rem; bottom: -1.5rem;
   border-radius: 32px;
   background: rgba(250, 246, 239, 0.95);
   box-shadow: 
@@ -361,14 +384,16 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 }
 
 .proj-header {
-  display: flex; align-items: baseline;
-  justify-content: space-between;
+  display: flex; 
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
   margin-bottom: 0.85rem;
 }
 
 .proj-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1;
@@ -376,7 +401,7 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 }
 
 .proj-tag {
-  font-size: 10px;
+  font-size: 0.65rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(139,115,85,0.7);
@@ -384,15 +409,19 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 }
 
 .proj-desc {
-  font-size: 13.5px;
-  line-height: 1.9;
+  font-size: 0.85rem;
+  line-height: 1.6;
   color: #5c5046;
-  margin-bottom: 1.25rem;
   font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+.proj-links-wrap {
+  display: flex; gap: 2rem; flex-wrap: wrap;
 }
 
 .proj-link {
-  font-size: 11px;
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #1c1612;
@@ -424,9 +453,7 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   transform-origin: left;
 }
 
-.proj-links-wrap {
-  display: flex; gap: 2rem; flex-wrap: wrap;
-}
+
 
 .div-full { height: 1px; background: rgba(139,115,85,0.15); margin: 3rem 0; }
 
@@ -492,7 +519,7 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 .contact-wrap { padding-top: 1rem; }
 .contact-line {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 24px; font-style: italic;
+  font-size: 1.5rem; font-style: italic;
   color: #5c5046; margin-bottom: 0.85rem; font-weight: 400;
 }
 .contact-emails {
@@ -600,8 +627,8 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   opacity: 0;
 }
 
-@media (max-width: 900px) {
-  body, html { padding: 0.75rem 0.5rem; }
+@media (max-width: 1150px) {
+  body, html { padding: 0.75rem 0.5rem; height: auto; overflow: auto; }
   .pg { 
     border-radius: 24px; 
     border: 1px solid rgba(255,255,255,0.7);
@@ -611,15 +638,23 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
       inset 0 -1px 0 rgba(255, 255, 255, 0.2),
       inset 0 0 20px rgba(255, 255, 255, 0.6);
     min-height: calc(100vh - 1.5rem);
+    height: auto;
+    max-height: none;
     padding: 2.5rem 1.5rem;
   }
   .col-wrap {
     grid-template-columns: 1fr;
     gap: 3rem;
+    height: auto;
   }
-  .left { position: relative; top: 0; }
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .left { position: relative; top: 0; height: auto; }
+  .right { height: auto; overflow: visible; padding: 0; margin: 0; }
   .proj { transform: none !important; }
-  .proj:hover { z-index: 1; }
+  .proj::before { display: none !important; }
+  .proj:hover { z-index: 1; transform: none !important; }
   .right:has(.proj:hover) .proj:not(:hover) { opacity: 1; filter: none; transform: none; }
   .name { font-size: 38px; }
   .role { font-size: 16px; margin-bottom: 1.5rem; }
@@ -863,7 +898,7 @@ button.contact-btn {
   color: #8b7355;
   padding: 1.25rem 3.5rem;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -934,6 +969,16 @@ button.contact-btn {
     </a>
   </div>
 
+  <div class="contact-wrap left-animate" style="margin-top: 0.5rem;">
+    <button class="contact-btn" id="open-modal-btn" style="padding: 1rem 2rem;">Reach Out</button>
+  </div>
+
+  <div class="film-tag left-animate" style="margin-top: 1.5rem; text-align: left;">
+    <span class="location-swap" data-hover="Vadodara, India">
+      <span class="location-main">22°18′N 73°11′E</span>
+    </span>
+  </div>
+
 </div>
 
 <div class="right">
@@ -943,13 +988,14 @@ button.contact-btn {
     <div class="section-rule-line"></div>
   </div>
 
+  <div class="projects-grid">
   <div class="proj reveal">
     <div class="proj-header">
       <span class="proj-name">Tile Extractor</span>
       <span class="proj-tag">PDF Parsing · Utility</span>
     </div>
     <p class="proj-desc">
-      A heavy-duty utility engineered for the lossless extraction of high-quality tile product images directly from large PDF catalogues. Built for sheer performance and precision, bypassing manual workflows entirely to automate large-scale asset recovery without compromising on resolution.
+      A heavy-duty utility for the lossless extraction of high-quality images directly from large PDF catalogues. Automates large-scale asset recovery with sheer performance and precision.
     </p>
     <div class="proj-links-wrap">
       <a class="proj-link" href="https://tile-extractor-r3ce.onrender.com/" target="_blank">
@@ -970,7 +1016,7 @@ button.contact-btn {
       <span class="proj-tag">Next.js · Platform · Live</span>
     </div>
     <p class="proj-desc">
-      A premium, community-driven platform for discovering, rating, and tracking movies and TV series. Built with a focus on elegant design and seamless user experience, Cinehaul allows users to curate their personal collections and earn reputation badges as tastemakers within a dedicated cinema community.
+      A premium, community-driven platform for discovering, rating, and tracking movies and TV series. Curate personal collections and earn reputation badges within a dedicated cinema community.
     </p>
     <div class="proj-links-wrap">
       <a class="proj-link" href="https://cinehaul.vercel.app/" target="_blank">
@@ -988,7 +1034,7 @@ button.contact-btn {
       <span class="proj-tag">RAG · SaaS · Live</span>
     </div>
     <p class="proj-desc">
-      An intelligent chatbot builder that transforms any collection of documents, PDFs, or website links into a fully custom AI assistant — trained on your knowledge, embedded onto any website with a single line of code. No technical knowledge required. The engine underneath handles hybrid retrieval, context management, and response calibration at a depth most custom implementations never reach.
+      An intelligent chatbot builder that transforms documents and website links into a custom AI assistant. Embeds anywhere with a single line of code, powered by advanced hybrid retrieval and context management.
     </p>
     <div class="proj-links-wrap">
       <a class="proj-link" href="https://kiwi-ai-rho.vercel.app/" target="_blank">
@@ -1006,7 +1052,7 @@ button.contact-btn {
       <span class="proj-tag">Extension · Offline · Privacy</span>
     </div>
     <p class="proj-desc">
-      A privacy-first browser extension that quietly saves everything you read into a fully offline, local database. Search your entire reading history instantly — no cloud, no server, no compromise. Built for absolute data ownership. Everything stays on your device, completely yours, always searchable, never exposed.
+      A privacy-first browser extension that saves everything you read into a fully offline, local database. Search your reading history instantly with zero cloud dependency — built for absolute data ownership.
     </p>
     <div class="proj-links-wrap">
       <a class="proj-link" href="https://ananta-extension.vercel.app/" target="_blank">
@@ -1017,19 +1063,8 @@ button.contact-btn {
       </a>
     </div>
   </div>
-
-  <div class="div-full reveal"></div>
-
-  <div class="contact-wrap reveal">
-    <div class="contact-line">Building systems that reason.</div>
-    <button class="contact-btn" id="open-modal-btn">Reach Out</button>
   </div>
 
-  <div class="film-tag reveal">
-    <span class="location-swap" data-hover="Vadodara, India">
-      <span class="location-main">22°18′N 73°11′E</span>
-    </span>
-  </div>
 
 </div>
 </div>

@@ -103,6 +103,35 @@
     height: auto !important;
     overflow: visible !important;
   }
+  .download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #8b7355;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 
+    0 10px 30px rgba(139, 115, 85, 0.08),
+    inset 0 0 0 rgba(255, 255, 255, 0.5),
+    inset 0 4px 10px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  transform: scale(0.96);
+  background: rgba(255, 255, 255, 0.85);
+  color: #362a1e;
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 10px 30px rgba(139, 115, 85, 0.15),
+    inset 0 6px 15px rgba(139, 115, 85, 0.2);
+}
   .col-wrap {
     overflow: visible !important;
   }
@@ -991,8 +1020,17 @@ button.contact-btn {
     </a>
   </div>
 
-  <div class="contact-wrap left-animate" style="margin-top: 0.5rem;">
+    <div class="contact-wrap left-animate" style="margin-top: 0.5rem; display: flex; gap: 1rem; align-items: center;">
     <button class="contact-btn" id="open-modal-btn" style="padding: 1rem 2rem;">Reach Out</button>
+    
+    <!-- Round Download PDF Button -->
+    <a href="./assets/resume.pdf" target="_blank" class="download-btn" title="Download Resume">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+    </a>
   </div>
 
   <div class="film-tag left-animate" style="margin-top: 1.5rem; text-align: left;">

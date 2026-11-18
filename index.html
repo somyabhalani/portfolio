@@ -976,23 +976,23 @@ textarea.form-input {
     inset 0 6px 15px rgba(139, 115, 85, 0.2);
 }
 
-/* Social & AI Connect Modal */
+/* Social / Direct Connect Modal */
 .social-modal-card {
-  max-width: 480px;
-  padding: 2.5rem 2.25rem;
+  max-width: 440px;
+  padding: 2.25rem 2rem;
 }
 .social-modal-subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 13.5px;
   color: #5c5046;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
   line-height: 1.5;
 }
 .social-channel-list {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 .social-channel-card {
   display: flex;
@@ -1058,88 +1058,10 @@ textarea.form-input {
   transform: translateX(3px) translateY(-3px);
   color: #1c1612;
 }
-
-/* AI Ask Section */
-.ai-ask-section {
-  margin-top: 1.25rem;
-}
-.ai-ask-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.85rem;
-}
-.ai-ask-line {
-  height: 1px;
-  flex: 1;
-  background: rgba(139, 115, 85, 0.25);
-}
-.ai-ask-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #8b7355;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.ai-buttons-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-}
-.ai-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 1rem 0.5rem;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid rgba(139, 115, 85, 0.2);
-  border-right: 1px solid rgba(139, 115, 85, 0.2);
-  border-radius: 16px;
-  text-decoration: none;
-  color: #1c1612;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 12px rgba(90, 70, 50, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-}
-.ai-btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(255, 255, 255, 1);
-  box-shadow: 0 8px 20px rgba(139, 115, 85, 0.15), inset 0 2px 4px rgba(255, 255, 255, 1);
-  color: #8b7355;
-}
-.ai-btn:active {
-  transform: scale(0.97);
-}
-.ai-btn-icon {
-  width: 26px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease;
-}
-.ai-btn:hover .ai-btn-icon {
-  transform: scale(1.12);
-}
 @media (max-width: 600px) {
   .social-modal-card {
     padding: 2rem 1.4rem !important;
     width: 92% !important;
-  }
-  .ai-buttons-grid {
-    gap: 0.5rem;
-  }
-  .ai-btn {
-    padding: 0.85rem 0.35rem;
-    font-size: 11px;
   }
 }
 </style>
@@ -1467,7 +1389,7 @@ document.addEventListener('mousemove', e => {
   <div class="modal-card social-modal-card">
     <button class="modal-close" id="close-social-modal-btn">×</button>
     <div class="modal-title" style="margin-bottom: 0.35rem; font-size: 30px;">Direct Connect</div>
-    <p class="social-modal-subtitle">Connect directly with Somya or ask AI models about his background.</p>
+    <p class="social-modal-subtitle">Reach out directly via LinkedIn or WhatsApp.</p>
 
     <!-- Channels List -->
     <div class="social-channel-list">
@@ -1508,46 +1430,6 @@ document.addEventListener('mousemove', e => {
           <polyline points="7 7 17 7 17 17"></polyline>
         </svg>
       </a>
-    </div>
-
-    <!-- AI Ask Section -->
-    <div class="ai-ask-section">
-      <div class="ai-ask-header">
-        <div class="ai-ask-line"></div>
-        <span class="ai-ask-label">Ask AI: &ldquo;Who is Somya Bhalani?&rdquo;</span>
-        <div class="ai-ask-line"></div>
-      </div>
-      <div class="ai-buttons-grid">
-        <!-- ChatGPT -->
-        <a href="https://chatgpt.com/?q=Who+is+Somya+Bhalani%3F" target="_blank" rel="noopener noreferrer" class="ai-btn" title="Ask ChatGPT">
-          <div class="ai-btn-icon" style="color: #10a37f;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M22.28 9.87a5.985 5.985 0 0 0-.52-4.91c-1.3-2.27-3.87-3.49-6.47-3.07a6.002 6.002 0 0 0-4.47-1.89c-2.61 0-4.99 1.68-5.88 4.14a6.012 6.012 0 0 0-3.99 2.9 5.992 5.992 0 0 0 .74 6.78 5.986 5.986 0 0 0 .52 4.91c1.3 2.27 3.87 3.49 6.47 3.07a6.002 6.002 0 0 0 4.47 1.89c2.61 0 4.99-1.68 5.88-4.14a6.012 6.012 0 0 0 3.99-2.9 5.992 5.992 0 0 0-.74-6.78zm-8.8 11.23a4.49 4.49 0 0 1-2.92-1.07l.15-.08 4.86-2.81a.8.8 0 0 0 .4-.69v-6.86l2.06 1.19a.07.07 0 0 1 .04.05v5.82a4.5 4.5 0 0 1-4.59 4.45zm-7.72-3.82a4.47 4.47 0 0 1-.54-3.06l.15.09 4.86 2.81a.8.8 0 0 0 .8 0l5.94-3.43v2.38a.07.07 0 0 1-.03.06l-5.04 2.91a4.51 4.51 0 0 1-6.14-1.76zm-1.88-7.79a4.49 4.49 0 0 1 2.38-2l-.01.17v5.62a.8.8 0 0 0 .4.69l5.94 3.43-2.06 1.19a.07.07 0 0 1-.07 0l-5.04-2.91a4.51 4.51 0 0 1-1.54-6.19zm12.39-2.52l-4.86-2.81a.8.8 0 0 0-.8 0l-5.94 3.43v-2.38a.07.07 0 0 1 .03-.06l5.04-2.91a4.5 4.5 0 0 1 6.69 4.82l-.16-.09zm2.42 4.7l-.15-.09-4.86-2.81a.8.8 0 0 0-.8 0l-5.94 3.43v-2.38a.07.07 0 0 1 .03-.06l5.04-2.91a4.5 4.5 0 0 1 6.68 4.82zm-4.75 3.23l-2.94-1.7 2.94-1.7 2.94 1.7-2.94 1.7z"/>
-            </svg>
-          </div>
-          <span class="ai-btn-title">ChatGPT</span>
-        </a>
-
-        <!-- Gemini -->
-        <a href="https://gemini.google.com/app?q=Who+is+Somya+Bhalani%3F" target="_blank" rel="noopener noreferrer" class="ai-btn" title="Ask Gemini">
-          <div class="ai-btn-icon" style="color: #4285f4;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.627 12 12 0-6.627 5.627-12 12-12-6.627 0-12-5.627-12-12z"/>
-            </svg>
-          </div>
-          <span class="ai-btn-title">Gemini</span>
-        </a>
-
-        <!-- Claude -->
-        <a href="https://claude.ai/new?q=Who+is+Somya+Bhalani%3F" target="_blank" rel="noopener noreferrer" class="ai-btn" title="Ask Claude">
-          <div class="ai-btn-icon" style="color: #d97706;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M13.5 2.5a1 1 0 0 0-2 0v5.1l-3.6-3.6a1 1 0 0 0-1.4 1.4l3.6 3.6H5a1 1 0 0 0 0 2h5.1l-3.6 3.6a1 1 0 1 0 1.4 1.4l3.6-3.6V20a1 1 0 0 0 2 0v-5.1l3.6 3.6a1 1 0 0 0 1.4-1.4l-3.6-3.6H20a1 1 0 0 0 0-2h-5.1l3.6-3.6a1 1 0 0 0-1.4-1.4l-3.6 3.6V2.5z"/>
-            </svg>
-          </div>
-          <span class="ai-btn-title">Claude</span>
-        </a>
-      </div>
     </div>
   </div>
 </div>

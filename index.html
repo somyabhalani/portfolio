@@ -1318,13 +1318,15 @@ document.querySelectorAll('.reveal').forEach(el => {
 
 // Niche Interaction: Magnetic Quote Wrap Spotlight
 const quoteWrap = document.querySelector('.quote-wrap');
-quoteWrap.addEventListener('mousemove', e => {
-  const rect = quoteWrap.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  quoteWrap.style.setProperty('--mouse-x', `${x}px`);
-  quoteWrap.style.setProperty('--mouse-y', `${y}px`);
-});
+if (quoteWrap) {
+  quoteWrap.addEventListener('mousemove', e => {
+    const rect = quoteWrap.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    quoteWrap.style.setProperty('--mouse-x', `${x}px`);
+    quoteWrap.style.setProperty('--mouse-y', `${y}px`);
+  });
+}
 
 // Niche Interaction: Parallax Profile Image
 photoFrame.addEventListener('mousemove', e => {

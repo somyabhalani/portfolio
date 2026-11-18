@@ -994,6 +994,32 @@ textarea.form-input {
   gap: 0.85rem;
   margin-bottom: 0.5rem;
 }
+.social-logos-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.95rem;
+}
+.social-logo-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(139, 115, 85, 0.2);
+  border-right: 1px solid rgba(139, 115, 85, 0.2);
+  box-shadow: 0 4px 12px rgba(90, 70, 50, 0.05), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+.social-logo-btn:hover {
+  transform: translateY(-2px) scale(1.06);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 20px rgba(139, 115, 85, 0.16);
+}
 .social-channel-card {
   display: flex;
   align-items: center;
@@ -1549,69 +1575,45 @@ document.addEventListener('mousemove', e => {
       <div class="modal-title" style="margin-bottom: 0.35rem; font-size: 30px;">Direct Connect</div>
       <p class="social-modal-subtitle">Reach out directly or share this portfolio.</p>
 
-      <!-- Channels List -->
-      <div class="social-channel-list">
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/somyabhalani" target="_blank" rel="noopener noreferrer" class="social-channel-card">
-          <div class="social-channel-left">
-            <div class="social-icon-box" style="color: #0a66c2;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
-              </svg>
-            </div>
-            <div class="social-channel-info">
-              <span class="social-channel-title">LinkedIn</span>
-              <span class="social-channel-desc">linkedin.com/in/somyabhalani</span>
-            </div>
-          </div>
-          <svg class="social-arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="7" y1="17" x2="17" y2="7"></line>
-            <polyline points="7 7 17 7 17 17"></polyline>
+      <!-- Direct Contact Logos Only (Compact, No Full Banner) -->
+      <div class="social-logos-row">
+        <!-- LinkedIn Logo Button -->
+        <a href="https://www.linkedin.com/in/somyabhalani" target="_blank" rel="noopener noreferrer" class="social-logo-btn" title="LinkedIn" aria-label="LinkedIn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#0a66c2">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
           </svg>
         </a>
 
-        <!-- WhatsApp -->
-        <a href="https://wa.me/918320408204?text=Hello%20Somya%2C%20I%20saw%20your%20portfolio!" target="_blank" rel="noopener noreferrer" class="social-channel-card">
-          <div class="social-channel-left">
-            <div class="social-icon-box" style="color: #25D366;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.57c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/>
-              </svg>
-            </div>
-            <div class="social-channel-info">
-              <span class="social-channel-title">WhatsApp</span>
-              <span class="social-channel-desc">+91 83204 08204 · Message directly</span>
-            </div>
-          </div>
-          <svg class="social-arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="7" y1="17" x2="17" y2="7"></line>
-            <polyline points="7 7 17 7 17 17"></polyline>
+        <!-- WhatsApp Logo Button -->
+        <a href="https://wa.me/918320408204?text=Hello%20Somya%2C%20I%20saw%20your%20portfolio!" target="_blank" rel="noopener noreferrer" class="social-logo-btn" title="WhatsApp" aria-label="WhatsApp">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.57c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/>
           </svg>
         </a>
-
-        <!-- Share Portfolio Option -->
-        <button type="button" class="social-channel-card" id="open-share-view-btn" style="width: 100%; border: 1px solid rgba(255, 255, 255, 0.85); border-bottom: 1px solid rgba(139, 115, 85, 0.2); border-right: 1px solid rgba(139, 115, 85, 0.2); cursor: pointer; text-align: left; background: rgba(255, 255, 255, 0.55);">
-          <div class="social-channel-left">
-            <div class="social-icon-box" style="color: #8b7355;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-              </svg>
-            </div>
-            <div class="social-channel-info">
-              <span class="social-channel-title">Share Portfolio</span>
-              <span class="social-channel-desc">QR Code · Instant Link</span>
-            </div>
-          </div>
-          <svg class="social-arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </button>
       </div>
+
+      <!-- Share Portfolio Option -->
+      <button type="button" class="social-channel-card" id="open-share-view-btn" style="width: 100%; border: 1px solid rgba(255, 255, 255, 0.85); border-bottom: 1px solid rgba(139, 115, 85, 0.2); border-right: 1px solid rgba(139, 115, 85, 0.2); cursor: pointer; text-align: left; background: rgba(255, 255, 255, 0.55);">
+        <div class="social-channel-left">
+          <div class="social-icon-box" style="color: #8b7355;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </div>
+          <div class="social-channel-info">
+            <span class="social-channel-title">Share Portfolio</span>
+            <span class="social-channel-desc">QR Code · Instant Link</span>
+          </div>
+        </div>
+        <svg class="social-arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
     </div>
 
     <!-- Panel 2: Share Portfolio Card View (QR Code + Link) -->
@@ -1944,186 +1946,6 @@ document.addEventListener('mousemove', e => {
     }
   });
 </script>
-
-<!-- Ambient Glass Sound System (Web Audio API Synthesizer) -->
-<script>
-(function() {
-  let audioCtx = null;
-
-  function initAudio() {
-    if (!audioCtx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        audioCtx = new AudioContext();
-      }
-    }
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-  }
-
-  // Pre-unlock audio on the very first touch or interaction anywhere
-  ['click', 'touchstart', 'keydown', 'mousemove'].forEach(evt => {
-    window.addEventListener(evt, initAudio, { once: true, passive: true });
-  });
-
-  // 1. Subtle Glass Hover: Airy high-harmonic glass ping
-  let lastHoverTime = 0;
-  function playGlassHover() {
-    initAudio();
-    if (!audioCtx || audioCtx.state !== 'running') return;
-
-    const now = audioCtx.currentTime;
-    if (Date.now() - lastHoverTime < 75) return;
-    lastHoverTime = Date.now();
-
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const filter = audioCtx.createBiquadFilter();
-
-    const baseFreq = 1850 + (Math.random() * 180 - 90);
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(baseFreq, now);
-
-    filter.type = 'bandpass';
-    filter.frequency.setValueAtTime(baseFreq, now);
-    filter.Q.setValueAtTime(8, now);
-
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.032, now + 0.005);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
-
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.055);
-  }
-
-  // 2. Crisp Glass Click / Tap: Dual-frequency crystal impact
-  function playGlassClick() {
-    initAudio();
-    if (!audioCtx || audioCtx.state !== 'running') return;
-
-    const now = audioCtx.currentTime;
-
-    [1150, 2450].forEach((freq, idx) => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now);
-      osc.frequency.exponentialRampToValueAtTime(freq * 0.88, now + 0.08);
-
-      const peakVolume = idx === 0 ? 0.075 : 0.035;
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(peakVolume, now + 0.003);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start(now);
-      osc.stop(now + 0.085);
-    });
-  }
-
-  // 3. Resonant Glass Open: Soft crystalline chord when modal opens
-  function playGlassOpen() {
-    initAudio();
-    if (!audioCtx || audioCtx.state !== 'running') return;
-
-    const now = audioCtx.currentTime;
-    [650, 1100, 1750].forEach((freq, idx) => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now);
-
-      const delay = idx * 0.025;
-      const peak = 0.045 / (idx + 1);
-
-      gain.gain.setValueAtTime(0.0001, now + delay);
-      gain.gain.exponentialRampToValueAtTime(peak, now + delay + 0.015);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.2);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start(now + delay);
-      osc.stop(now + delay + 0.22);
-    });
-  }
-
-  // 4. Soft Glass Dismiss / Close
-  function playGlassClose() {
-    initAudio();
-    if (!audioCtx || audioCtx.state !== 'running') return;
-
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(1200, now);
-    osc.frequency.exponentialRampToValueAtTime(650, now + 0.1);
-
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.045, now + 0.008);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.12);
-  }
-
-  // Bind to interactions (element tracking so moving inside buttons never re-triggers audio)
-  const hoverTargets = 'a, button, .contact-btn, .social-channel-card, .download-btn, .share-url-display';
-  let currentHoveredEl = null;
-  
-  document.addEventListener('mouseover', (e) => {
-    if (!e.target || !e.target.closest) return;
-    const target = e.target.closest(hoverTargets);
-    if (target) {
-      if (target !== currentHoveredEl) {
-        currentHoveredEl = target;
-        playGlassHover();
-      }
-    } else {
-      currentHoveredEl = null;
-    }
-  });
-
-  document.addEventListener('mouseout', (e) => {
-    if (!currentHoveredEl) return;
-    if (!e.relatedTarget || !e.relatedTarget.closest || e.relatedTarget.closest(hoverTargets) !== currentHoveredEl) {
-      currentHoveredEl = null;
-    }
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!e.target || !e.target.closest) return;
-    const clickedEl = e.target.closest(hoverTargets);
-    if (clickedEl) {
-      if (clickedEl.id === 'open-modal-btn' || clickedEl.id === 'open-social-modal-btn' || clickedEl.id === 'open-share-view-btn') {
-        playGlassOpen();
-      } else if (clickedEl.id === 'close-modal-btn' || clickedEl.id === 'close-social-modal-btn') {
-        playGlassClose();
-      } else {
-        playGlassClick();
-      }
-    } else if (e.target.classList && e.target.classList.contains('modal-overlay')) {
-      playGlassClose();
-    }
-  });
-})();
-</script>
-  
-
 
 </body>
 </html>

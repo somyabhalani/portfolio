@@ -394,18 +394,13 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 
 .proj {
   position: relative;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-              opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: center left;
   z-index: 1;
+  will-change: transform, filter, opacity;
   transform: translateZ(0);
-}
-
-.proj.in-view {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-              opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .proj::before {
@@ -419,13 +414,13 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
     0 10px 30px rgba(90, 70, 50, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 1);
   opacity: 0;
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: -1;
   pointer-events: none;
 }
 
 .proj:hover {
-  transform: scale(1.06) translateX(18px) translateY(-4px) translateZ(0);
+  transform: scale(1.08) translateX(25px) translateY(-5px) translateZ(0);
   border-bottom-color: transparent;
   z-index: 100;
 }
@@ -435,9 +430,9 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 }
 
 .right:has(.proj:hover) .proj:not(:hover) {
-  opacity: 0.4;
-  filter: blur(2.5px);
-  transform: scale(0.97) translateX(-6px) translateZ(0);
+  opacity: 0.35;
+  filter: blur(5px);
+  transform: scale(0.95) translateX(-10px) translateZ(0);
 }
 
 .proj-header {
@@ -2086,8 +2081,8 @@ document.addEventListener('mousemove', e => {
     osc.stop(now + 0.12);
   }
 
-  // Bind to interactions (element tracking so moving inside a card never re-triggers audio)
-  const hoverTargets = 'a, button, .proj, .contact-btn, .social-channel-card, .download-btn, .share-url-display';
+  // Bind to interactions (element tracking so moving inside buttons never re-triggers audio)
+  const hoverTargets = 'a, button, .contact-btn, .social-channel-card, .download-btn, .share-url-display';
   let currentHoveredEl = null;
   
   document.addEventListener('mouseover', (e) => {

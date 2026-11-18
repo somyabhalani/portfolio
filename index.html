@@ -1599,6 +1599,169 @@ document.addEventListener('mousemove', e => {
     }
   });
 </script>
+
+<!-- Ambient Glass Sound System (Web Audio API Synthesizer) -->
+<script>
+(function() {
+  let audioCtx = null;
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        audioCtx = new AudioContext();
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
+  // Pre-unlock audio on the very first touch or interaction anywhere
+  ['click', 'touchstart', 'keydown', 'mousemove'].forEach(evt => {
+    window.addEventListener(evt, initAudio, { once: true, passive: true });
+  });
+
+  // 1. Subtle Glass Hover: Airy high-harmonic glass ping
+  let lastHoverTime = 0;
+  function playGlassHover() {
+    initAudio();
+    if (!audioCtx || audioCtx.state !== 'running') return;
+
+    const now = audioCtx.currentTime;
+    if (Date.now() - lastHoverTime < 75) return;
+    lastHoverTime = Date.now();
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+
+    const baseFreq = 1850 + (Math.random() * 180 - 90);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(baseFreq, now);
+
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(baseFreq, now);
+    filter.Q.setValueAtTime(8, now);
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.032, now + 0.005);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.055);
+  }
+
+  // 2. Crisp Glass Click / Tap: Dual-frequency crystal impact
+  function playGlassClick() {
+    initAudio();
+    if (!audioCtx || audioCtx.state !== 'running') return;
+
+    const now = audioCtx.currentTime;
+
+    [1150, 2450].forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.88, now + 0.08);
+
+      const peakVolume = idx === 0 ? 0.075 : 0.035;
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(peakVolume, now + 0.003);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.085);
+    });
+  }
+
+  // 3. Resonant Glass Open: Soft crystalline chord when modal opens
+  function playGlassOpen() {
+    initAudio();
+    if (!audioCtx || audioCtx.state !== 'running') return;
+
+    const now = audioCtx.currentTime;
+    [650, 1100, 1750].forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+
+      const delay = idx * 0.025;
+      const peak = 0.045 / (idx + 1);
+
+      gain.gain.setValueAtTime(0.0001, now + delay);
+      gain.gain.exponentialRampToValueAtTime(peak, now + delay + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.2);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now + delay);
+      osc.stop(now + delay + 0.22);
+    });
+  }
+
+  // 4. Soft Glass Dismiss / Close
+  function playGlassClose() {
+    initAudio();
+    if (!audioCtx || audioCtx.state !== 'running') return;
+
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1200, now);
+    osc.frequency.exponentialRampToValueAtTime(650, now + 0.1);
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.045, now + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.12);
+  }
+
+  // Bind to interactions
+  const hoverTargets = 'a, button, .proj, .contact-btn, .social-channel-card, .download-btn';
+  
+  document.addEventListener('mouseover', (e) => {
+    if (e.target && e.target.closest && e.target.closest(hoverTargets)) {
+      playGlassHover();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target || !e.target.closest) return;
+    const clickedEl = e.target.closest(hoverTargets);
+    if (clickedEl) {
+      if (clickedEl.id === 'open-modal-btn' || clickedEl.id === 'open-social-modal-btn') {
+        playGlassOpen();
+      } else if (clickedEl.id === 'close-modal-btn' || clickedEl.id === 'close-social-modal-btn') {
+        playGlassClose();
+      } else {
+        playGlassClick();
+      }
+    } else if (e.target.classList && e.target.classList.contains('modal-overlay')) {
+      playGlassClose();
+    }
+  });
+})();
+</script>
   
 
 

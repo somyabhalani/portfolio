@@ -975,6 +975,173 @@ textarea.form-input {
     0 0 0 rgba(139, 115, 85, 0),
     inset 0 6px 15px rgba(139, 115, 85, 0.2);
 }
+
+/* Social & AI Connect Modal */
+.social-modal-card {
+  max-width: 480px;
+  padding: 2.5rem 2.25rem;
+}
+.social-modal-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  color: #5c5046;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+.social-channel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+.social-channel-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.15rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(139, 115, 85, 0.2);
+  border-right: 1px solid rgba(139, 115, 85, 0.2);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(90, 70, 50, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+.social-channel-card:hover {
+  transform: translateY(-2px) scale(1.01);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 8px 24px rgba(139, 115, 85, 0.16), inset 0 1px 2px rgba(255, 255, 255, 1);
+}
+.social-channel-left {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.social-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: transform 0.3s ease;
+}
+.social-channel-card:hover .social-icon-box {
+  transform: scale(1.08);
+}
+.social-channel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.social-channel-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1c1612;
+}
+.social-channel-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #8b7355;
+  letter-spacing: 0.01em;
+}
+.social-arrow-icon {
+  color: #8b7355;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.social-channel-card:hover .social-arrow-icon {
+  transform: translateX(3px) translateY(-3px);
+  color: #1c1612;
+}
+
+/* AI Ask Section */
+.ai-ask-section {
+  margin-top: 1.25rem;
+}
+.ai-ask-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+.ai-ask-line {
+  height: 1px;
+  flex: 1;
+  background: rgba(139, 115, 85, 0.25);
+}
+.ai-ask-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8b7355;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ai-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+.ai-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(139, 115, 85, 0.2);
+  border-right: 1px solid rgba(139, 115, 85, 0.2);
+  border-radius: 16px;
+  text-decoration: none;
+  color: #1c1612;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(90, 70, 50, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+.ai-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 8px 20px rgba(139, 115, 85, 0.15), inset 0 2px 4px rgba(255, 255, 255, 1);
+  color: #8b7355;
+}
+.ai-btn:active {
+  transform: scale(0.97);
+}
+.ai-btn-icon {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+.ai-btn:hover .ai-btn-icon {
+  transform: scale(1.12);
+}
+@media (max-width: 600px) {
+  .social-modal-card {
+    padding: 2rem 1.4rem !important;
+    width: 92% !important;
+  }
+  .ai-buttons-grid {
+    gap: 0.5rem;
+  }
+  .ai-btn {
+    padding: 0.85rem 0.35rem;
+    font-size: 11px;
+  }
+}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap">
 </head>
@@ -1022,22 +1189,21 @@ textarea.form-input {
     </a>
   </div>
 
-      <div class="contact-wrap left-animate" style="margin-top: 0.5rem; display: flex; gap: 1rem; align-items: center;">
+  <div class="contact-wrap left-animate" style="margin-top: 0.5rem; display: flex; gap: 0.85rem; align-items: center; flex-wrap: wrap;">
     
     <!-- Original Reach Out Button -->
-    <button class="contact-btn" id="open-modal-btn" style="padding: 1rem 2rem;">REACH OUT</button>
+    <button class="contact-btn" id="open-modal-btn" style="padding: 0.9rem 1.8rem;">REACH OUT</button>
     
     <!-- New Resume Link (Styled exactly like the button) -->
-    <a href="./assets/resume.pdf" target="_blank" class="contact-btn" style="padding: 1rem 2rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">
+    <a href="./assets/resume.pdf" target="_blank" class="contact-btn" style="padding: 0.9rem 1.8rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">
       RESUME
     </a>
 
   </div>
 
-  <div class="film-tag left-animate" style="margin-top: 1.5rem; text-align: left;">
-    <span class="location-swap" data-hover="Junagadh, Gujarat, India">
-      <span class="location-main">Junagadh, Gujarat, India</span>
-    </span>
+  <!-- Contact / Direct Channels Button -->
+  <div class="left-animate" style="margin-top: 0.85rem; text-align: left;">
+    <button class="contact-btn" id="open-social-modal-btn" style="padding: 0.9rem 2.2rem;">CONTACT</button>
   </div>
 
 </div>
@@ -1296,6 +1462,96 @@ document.addEventListener('mousemove', e => {
   </div>
 </div>
 
+<!-- Direct Contact / Social & AI Modal -->
+<div class="modal-overlay" id="social-modal">
+  <div class="modal-card social-modal-card">
+    <button class="modal-close" id="close-social-modal-btn">×</button>
+    <div class="modal-title" style="margin-bottom: 0.35rem; font-size: 30px;">Direct Connect</div>
+    <p class="social-modal-subtitle">Connect directly with Somya or ask AI models about his background.</p>
+
+    <!-- Channels List -->
+    <div class="social-channel-list">
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/somyabhalani" target="_blank" rel="noopener noreferrer" class="social-channel-card">
+        <div class="social-channel-left">
+          <div class="social-icon-box" style="color: #0a66c2;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+            </svg>
+          </div>
+          <div class="social-channel-info">
+            <span class="social-channel-title">LinkedIn</span>
+            <span class="social-channel-desc">linkedin.com/in/somyabhalani</span>
+          </div>
+        </div>
+        <svg class="social-arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"></line>
+          <polyline points="7 7 17 7 17 17"></polyline>
+        </svg>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/918320408204?text=Hello%20Somya%2C%20I%20saw%20your%20portfolio!" target="_blank" rel="noopener noreferrer" class="social-channel-card">
+        <div class="social-channel-left">
+          <div class="social-icon-box" style="color: #25D366;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.57c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+            </svg>
+          </div>
+          <div class="social-channel-info">
+            <span class="social-channel-title">WhatsApp</span>
+            <span class="social-channel-desc">+91 83204 08204 · Message directly</span>
+          </div>
+        </div>
+        <svg class="social-arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"></line>
+          <polyline points="7 7 17 7 17 17"></polyline>
+        </svg>
+      </a>
+    </div>
+
+    <!-- AI Ask Section -->
+    <div class="ai-ask-section">
+      <div class="ai-ask-header">
+        <div class="ai-ask-line"></div>
+        <span class="ai-ask-label">Ask AI: &ldquo;Who is Somya Bhalani?&rdquo;</span>
+        <div class="ai-ask-line"></div>
+      </div>
+      <div class="ai-buttons-grid">
+        <!-- ChatGPT -->
+        <a href="https://chatgpt.com/?q=Who+is+Somya+Bhalani%3F" target="_blank" rel="noopener noreferrer" class="ai-btn" title="Ask ChatGPT">
+          <div class="ai-btn-icon" style="color: #10a37f;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.28 9.87a5.985 5.985 0 0 0-.52-4.91c-1.3-2.27-3.87-3.49-6.47-3.07a6.002 6.002 0 0 0-4.47-1.89c-2.61 0-4.99 1.68-5.88 4.14a6.012 6.012 0 0 0-3.99 2.9 5.992 5.992 0 0 0 .74 6.78 5.986 5.986 0 0 0 .52 4.91c1.3 2.27 3.87 3.49 6.47 3.07a6.002 6.002 0 0 0 4.47 1.89c2.61 0 4.99-1.68 5.88-4.14a6.012 6.012 0 0 0 3.99-2.9 5.992 5.992 0 0 0-.74-6.78zm-8.8 11.23a4.49 4.49 0 0 1-2.92-1.07l.15-.08 4.86-2.81a.8.8 0 0 0 .4-.69v-6.86l2.06 1.19a.07.07 0 0 1 .04.05v5.82a4.5 4.5 0 0 1-4.59 4.45zm-7.72-3.82a4.47 4.47 0 0 1-.54-3.06l.15.09 4.86 2.81a.8.8 0 0 0 .8 0l5.94-3.43v2.38a.07.07 0 0 1-.03.06l-5.04 2.91a4.51 4.51 0 0 1-6.14-1.76zm-1.88-7.79a4.49 4.49 0 0 1 2.38-2l-.01.17v5.62a.8.8 0 0 0 .4.69l5.94 3.43-2.06 1.19a.07.07 0 0 1-.07 0l-5.04-2.91a4.51 4.51 0 0 1-1.54-6.19zm12.39-2.52l-4.86-2.81a.8.8 0 0 0-.8 0l-5.94 3.43v-2.38a.07.07 0 0 1 .03-.06l5.04-2.91a4.5 4.5 0 0 1 6.69 4.82l-.16-.09zm2.42 4.7l-.15-.09-4.86-2.81a.8.8 0 0 0-.8 0l-5.94 3.43v-2.38a.07.07 0 0 1 .03-.06l5.04-2.91a4.5 4.5 0 0 1 6.68 4.82zm-4.75 3.23l-2.94-1.7 2.94-1.7 2.94 1.7-2.94 1.7z"/>
+            </svg>
+          </div>
+          <span class="ai-btn-title">ChatGPT</span>
+        </a>
+
+        <!-- Gemini -->
+        <a href="https://gemini.google.com/app?q=Who+is+Somya+Bhalani%3F" target="_blank" rel="noopener noreferrer" class="ai-btn" title="Ask Gemini">
+          <div class="ai-btn-icon" style="color: #4285f4;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.627 12 12 0-6.627 5.627-12 12-12-6.627 0-12-5.627-12-12z"/>
+            </svg>
+          </div>
+          <span class="ai-btn-title">Gemini</span>
+        </a>
+
+        <!-- Claude -->
+        <a href="https://claude.ai/new?q=Who+is+Somya+Bhalani%3F" target="_blank" rel="noopener noreferrer" class="ai-btn" title="Ask Claude">
+          <div class="ai-btn-icon" style="color: #d97706;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M13.5 2.5a1 1 0 0 0-2 0v5.1l-3.6-3.6a1 1 0 0 0-1.4 1.4l3.6 3.6H5a1 1 0 0 0 0 2h5.1l-3.6 3.6a1 1 0 1 0 1.4 1.4l3.6-3.6V20a1 1 0 0 0 2 0v-5.1l3.6 3.6a1 1 0 0 0 1.4-1.4l-3.6-3.6H20a1 1 0 0 0 0-2h-5.1l3.6-3.6a1 1 0 0 0-1.4-1.4l-3.6 3.6V2.5z"/>
+            </svg>
+          </div>
+          <span class="ai-btn-title">Claude</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   // Modal Logic
   const modalOverlay = document.getElementById('contact-modal');
@@ -1316,6 +1572,37 @@ document.addEventListener('mousemove', e => {
   closeModalBtn.addEventListener('click', closeModal);
   modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) closeModal();
+  });
+
+  // Social Modal Logic
+  const socialModalOverlay = document.getElementById('social-modal');
+  const openSocialModalBtn = document.getElementById('open-social-modal-btn');
+  const closeSocialModalBtn = document.getElementById('close-social-modal-btn');
+
+  function openSocialModal() {
+    socialModalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSocialModal() {
+    socialModalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (openSocialModalBtn) openSocialModalBtn.addEventListener('click', openSocialModal);
+  if (closeSocialModalBtn) closeSocialModalBtn.addEventListener('click', closeSocialModal);
+  if (socialModalOverlay) {
+    socialModalOverlay.addEventListener('click', (e) => {
+      if (e.target === socialModalOverlay) closeSocialModal();
+    });
+  }
+
+  // Close modals on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (socialModalOverlay && socialModalOverlay.classList.contains('active')) closeSocialModal();
+      if (modalOverlay && modalOverlay.classList.contains('active')) closeModal();
+    }
   });
 </script>
 

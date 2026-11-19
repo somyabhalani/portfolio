@@ -540,47 +540,43 @@ body {
 
   let currentSubscriber = null;
 
+  // Supabase Configuration
+  const SUPABASE_URL = 'https://xczkteabzfbjhveqxsoy.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_sGpA3rcMQ1__igEYHqKHsQ_3GFaJEy-';
+
   async function verifySubscriber() {
-    // If Supabase client is configured:
-    if (window.supabase) {
-      try {
-        let query = window.supabase.from('subscribers').select('*');
-        if (tokenParam) query = query.eq('unsubscribe_token', tokenParam);
-        else if (emailParam) query = query.eq('email', emailParam.toLowerCase());
-        else {
-          showPanel('notfound');
-          return;
-        }
-
-        const { data, error } = await query.single();
-        if (error || !data) {
-          showPanel('notfound');
-          return;
-        }
-
-        currentSubscriber = data;
-        if (data.status === 'inactive' || data.status === 'unsubscribed') {
-          if (alreadyTargetEmail) alreadyTargetEmail.textContent = data.email;
-          showPanel('already');
-        } else {
-          if (displayTargetEmail) displayTargetEmail.textContent = data.email;
-          showPanel('confirm');
-        }
-      } catch (e) {
-        showPanel('notfound');
-      }
-    } else {
-      // Prototype / Demo Verification Delay
-      await new Promise(r => setTimeout(r, 600));
-
+    try {
       if (!tokenParam && !emailParam) {
         showPanel('notfound');
         return;
       }
 
-      const email = emailParam || (tokenParam === 'already' ? 'subscriber@example.com' : 'reader@example.com');
-      currentSubscriber = { email: email, status: tokenParam === 'already' ? 'inactive' : 'active' };
+      let url = `${SUPABASE_URL}/rest/v1/subscribers?select=*`;
+      if (tokenParam) {
+        url += `&unsubscribe_token=eq.${encodeURIComponent(tokenParam)}`;
+      } else if (emailParam) {
+        url += `&email=eq.${encodeURIComponent(emailParam.toLowerCase().trim())}`;
+      }
 
+      const res = await fetch(url, {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      });
+
+      if (!res.ok) {
+        showPanel('notfound');
+        return;
+      }
+
+      const data = await res.json();
+      if (!data || data.length === 0) {
+        showPanel('notfound');
+        return;
+      }
+
+      currentSubscriber = data[0];
       if (currentSubscriber.status === 'inactive') {
         if (alreadyTargetEmail) alreadyTargetEmail.textContent = currentSubscriber.email;
         showPanel('already');
@@ -588,6 +584,9 @@ body {
         if (displayTargetEmail) displayTargetEmail.textContent = currentSubscriber.email;
         showPanel('confirm');
       }
+    } catch (e) {
+      console.error('Verify error:', e);
+      showPanel('notfound');
     }
   }
 
@@ -596,19 +595,58 @@ body {
     showPanel('success');
 
     const unsubscribeTask = (async () => {
-      if (window.supabase && currentSubscriber) {
-        const { error } = await window.supabase
-          .from('subscribers')
-          .update({ 
-            status: 'inactive', 
-            unsubscribed_at: new Date().toISOString() 
+      if (currentSubscriber && currentSubscriber.id) {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${currentSubscriber.id}`, {
+          method: 'PATCH',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            status: 'inactive',
+            unsubscribed_at: new Date().toISOString()
           })
-          .eq('id', currentSubscriber.id);
-          
-        if (error) throw error;
-      } else {
-        // Prototype simulation delay
-        await new Promise(r => setTimeout(r, 900));
+        });
+        if (!res.ok) {
+          throw new Error('Could not update status. Please try again.');
+        }
+      } else if (email) {
+        const checkRes = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(email.toLowerCase().trim())}`, {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        });
+        const existing = checkRes.ok ? await checkRes.json() : [];
+        if (existing && existing.length > 0) {
+          await fetch(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${existing[0].id}`, {
+            method: 'PATCH',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              status: 'inactive',
+              unsubscribed_at: new Date().toISOString()
+            })
+          });
+        } else {
+          await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: email.toLowerCase().trim(),
+              status: 'inactive',
+              unsubscribed_at: new Date().toISOString()
+            })
+          });
+        }
       }
       return { success: true };
     })();
@@ -616,27 +654,34 @@ body {
     try {
       await withLoader(unsubscribeTask);
     } catch (e) {
-      alert('Could not update status: ' + (e.message || e));
+      alert('Could not complete unsubscribe: ' + (e.message || e));
       showPanel('confirm');
     }
   }
 
   // Handle Re-subscribe Action
   async function performResubscribe() {
-    if (window.supabase && currentSubscriber) {
-      await window.supabase
-        .from('subscribers')
-        .update({ 
-          status: 'active', 
-          unsubscribed_at: null 
+    if (currentSubscriber && currentSubscriber.id) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${currentSubscriber.id}`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          status: 'active',
+          unsubscribed_at: null
         })
-        .eq('id', currentSubscriber.id);
-    } else {
-      await new Promise(r => setTimeout(r, 400));
+      });
+      if (res.ok) {
+        alert("You've been re-subscribed to Beneath the Curve!");
+        window.location.href = '/#beneath-the-curve';
+        return;
+      }
     }
-
-    alert('You have been re-subscribed to Beneath the Curve!');
-    window.location.href = '/';
+    alert("You've been re-subscribed to Beneath the Curve!");
+    window.location.href = '/#beneath-the-curve';
   }
 
   // Event Listeners

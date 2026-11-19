@@ -2465,6 +2465,73 @@ document.addEventListener('mousemove', e => {
     });
   }
 
+  // Supabase Configuration for Beneath the Curve
+  const SUPABASE_URL = 'https://xczkteabzfbjhveqxsoy.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_sGpA3rcMQ1__igEYHqKHsQ_3GFaJEy-';
+
+  window.handleNewsletterSubscribe = async function(email) {
+    const cleanEmail = email.trim().toLowerCase();
+
+    // 1. Check if subscriber already exists
+    const checkRes = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(cleanEmail)}&select=id,status`, {
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      }
+    });
+
+    if (checkRes.ok) {
+      const existing = await checkRes.json();
+      if (existing && existing.length > 0) {
+        const sub = existing[0];
+        if (sub.status === 'active') {
+          // Already active subscriber
+          return { success: true, alreadyActive: true };
+        } else {
+          // Inactive subscriber -> Reactivate to active!
+          const reactivateRes = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${sub.id}`, {
+            method: 'PATCH',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              status: 'active',
+              unsubscribed_at: null
+            })
+          });
+          if (!reactivateRes.ok) {
+            throw new Error('Could not reactivate subscription. Please try again.');
+          }
+          return { success: true, reactivated: true };
+        }
+      }
+    }
+
+    // 2. New Subscriber -> Insert into Supabase
+    const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({
+        email: cleanEmail,
+        status: 'active'
+      })
+    });
+
+    if (!insertRes.ok) {
+      const errData = await insertRes.json().catch(() => ({}));
+      throw new Error(errData.message || 'Subscription failed. Please try again.');
+    }
+
+    return { success: true };
+  };
+
   // Subscribe Form Handler using withLoader()
   if (newsletterForm) {
     newsletterForm.addEventListener('submit', async (e) => {
@@ -2479,19 +2546,8 @@ document.addEventListener('mousemove', e => {
       newsletterForm.style.display = 'none';
       if (newsletterLoaderWrap) newsletterLoaderWrap.style.display = 'flex';
 
-      // Subscription promise: calls custom / Supabase handler if configured, else realistic simulation
-      const subscribeTask = (async () => {
-        if (window.handleNewsletterSubscribe) {
-          return await window.handleNewsletterSubscribe(email);
-        } else {
-          // Simulation placeholder until Supabase keys are provided
-          await new Promise(r => setTimeout(r, 1400));
-          return { success: true };
-        }
-      })();
-
       try {
-        await withLoader(subscribeTask);
+        await withLoader(window.handleNewsletterSubscribe(email));
         if (newsletterEmail) newsletterEmail.value = '';
       } catch (err) {
         console.error('Subscription error:', err);

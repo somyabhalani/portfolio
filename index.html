@@ -1365,8 +1365,96 @@ textarea.form-input {
   box-shadow: 0 4px 12px rgba(62, 107, 72, 0.3) !important;
 }
 
+/* Beneath the Curve / Newsletter Modal */
+.newsletter-modal-card {
+  max-width: 480px;
+  padding: 2.75rem 2.25rem 2rem;
+}
+.newsletter-modal-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #8b7355;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.85rem;
+}
+.newsletter-modal-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+  color: #5c5046;
+  margin-bottom: 1.65rem;
+}
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+.newsletter-input {
+  width: 100%;
+  padding: 0.95rem 1.25rem;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(139, 115, 85, 0.2);
+  border-right: 1px solid rgba(139, 115, 85, 0.2);
+  border-radius: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1c1612;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(90, 70, 50, 0.04);
+}
+.newsletter-input:focus {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(139, 115, 85, 0.4);
+  box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.12);
+}
+.newsletter-submit-btn {
+  width: 100%;
+  padding: 0.95rem !important;
+  border-radius: 14px !important;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-sizing: border-box;
+}
+.newsletter-status {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  margin-top: 0.35rem;
+  text-align: center;
+}
+.newsletter-status.success {
+  background: rgba(62, 107, 72, 0.12);
+  border: 1px solid rgba(62, 107, 72, 0.3);
+  color: #2b5133;
+}
+.newsletter-status.error {
+  background: rgba(180, 50, 50, 0.1);
+  border: 1px solid rgba(180, 50, 50, 0.25);
+  color: #8a2020;
+}
+.newsletter-modal-footer-note {
+  margin-top: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  color: #8b7355;
+  opacity: 0.8;
+  text-align: center;
+}
+
 @media (max-width: 600px) {
-  .social-modal-card {
+  .social-modal-card, .newsletter-modal-card {
     padding: 1.85rem 1.35rem 1.6rem !important;
     width: 92% !important;
   }
@@ -1800,6 +1888,39 @@ document.addEventListener('mousemove', e => {
   </div>
 </div>
 
+<!-- Beneath the Curve / Newsletter Modal -->
+<div class="modal-overlay" id="newsletter-modal">
+  <div class="modal-card newsletter-modal-card">
+    <button class="modal-close" id="close-newsletter-modal-btn">×</button>
+
+    <div class="modal-title" style="margin-bottom: 0.35rem; font-size: 30px;">Beneath the Curve</div>
+    <div class="newsletter-modal-subtitle">Ideas worth thinking about.</div>
+    <p class="newsletter-modal-desc">
+      A letter on technology, intelligence, discoveries and the ideas behind how things work.
+    </p>
+
+    <!-- Subscription Form -->
+    <form id="newsletter-form" class="newsletter-form" onsubmit="return false;">
+      <input 
+        type="email" 
+        id="newsletter-email" 
+        class="newsletter-input" 
+        placeholder="Enter your email address..." 
+        required 
+        autocomplete="email"
+      />
+      <button type="submit" id="newsletter-submit-btn" class="contact-btn newsletter-submit-btn">
+        <span class="btn-text">SUBSCRIBE</span>
+      </button>
+      <div id="newsletter-status" class="newsletter-status" style="display: none;"></div>
+    </form>
+
+    <div class="newsletter-modal-footer-note">
+      Occasional letters. No noise. Unsubscribe anytime.
+    </div>
+  </div>
+</div>
+
 <script>
   // Modal Logic
   const modalOverlay = document.getElementById('contact-modal');
@@ -1971,8 +2092,88 @@ document.addEventListener('mousemove', e => {
     if (e.key === 'Escape') {
       if (socialModalOverlay && socialModalOverlay.classList.contains('active')) closeSocialModal();
       if (modalOverlay && modalOverlay.classList.contains('active')) closeModal();
+      if (newsletterModalOverlay && newsletterModalOverlay.classList.contains('active')) closeNewsletterModal();
     }
   });
+
+  // Beneath the Curve / Newsletter Modal Logic
+  const newsletterModalOverlay = document.getElementById('newsletter-modal');
+  const openNewsletterModalBtn = document.getElementById('beneath-curve-btn');
+  const closeNewsletterModalBtn = document.getElementById('close-newsletter-modal-btn');
+  const newsletterForm = document.getElementById('newsletter-form');
+  const newsletterEmail = document.getElementById('newsletter-email');
+  const newsletterSubmitBtn = document.getElementById('newsletter-submit-btn');
+  const newsletterStatus = document.getElementById('newsletter-status');
+
+  function openNewsletterModal() {
+    if (newsletterModalOverlay) {
+      newsletterModalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      if (newsletterEmail) setTimeout(() => newsletterEmail.focus(), 150);
+    }
+  }
+
+  function closeNewsletterModal() {
+    if (newsletterModalOverlay) {
+      newsletterModalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      if (newsletterStatus) {
+        newsletterStatus.style.display = 'none';
+        newsletterStatus.className = 'newsletter-status';
+        newsletterStatus.textContent = '';
+      }
+    }
+  }
+
+  if (openNewsletterModalBtn) openNewsletterModalBtn.addEventListener('click', openNewsletterModal);
+  if (closeNewsletterModalBtn) closeNewsletterModalBtn.addEventListener('click', closeNewsletterModal);
+  if (newsletterModalOverlay) {
+    newsletterModalOverlay.addEventListener('click', (e) => {
+      if (e.target === newsletterModalOverlay) closeNewsletterModal();
+    });
+  }
+
+  // Subscribe Form Handler
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = newsletterEmail ? newsletterEmail.value.trim().toLowerCase() : '';
+      if (!email || !email.includes('@')) {
+        showNewsletterStatus('Please enter a valid email address.', 'error');
+        return;
+      }
+
+      const submitText = newsletterSubmitBtn.querySelector('.btn-text');
+      const originalText = submitText ? submitText.textContent : 'SUBSCRIBE';
+      if (submitText) submitText.textContent = 'SUBSCRIBING...';
+      newsletterSubmitBtn.disabled = true;
+
+      try {
+        if (window.handleNewsletterSubscribe) {
+          await window.handleNewsletterSubscribe(email);
+        } else {
+          // Default placeholder / client simulation until Supabase credentials are plugged in
+          await new Promise(r => setTimeout(r, 600));
+          showNewsletterStatus("You're subscribed! Welcome to Beneath the Curve.", 'success');
+          if (newsletterEmail) newsletterEmail.value = '';
+        }
+      } catch (err) {
+        console.error('Subscription error:', err);
+        showNewsletterStatus(err.message || 'Something went wrong. Please try again.', 'error');
+      } finally {
+        if (submitText) submitText.textContent = originalText;
+        newsletterSubmitBtn.disabled = false;
+      }
+    });
+  }
+
+  function showNewsletterStatus(message, type) {
+    if (newsletterStatus) {
+      newsletterStatus.textContent = message;
+      newsletterStatus.className = `newsletter-status ${type}`;
+      newsletterStatus.style.display = 'block';
+    }
+  }
 </script>
 
 <script type="module">

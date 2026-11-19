@@ -535,8 +535,12 @@ body {
 
   // Parse URL Parameters (?token=... or ?email=...)
   const urlParams = new URLSearchParams(window.location.search);
-  const tokenParam = urlParams.get('token');
-  const emailParam = urlParams.get('email');
+  const rawToken = urlParams.get('token');
+  const rawEmail = urlParams.get('email');
+
+  // Sanitize: strip any surrounding angle brackets < >, quotes, or whitespace
+  const tokenParam = rawToken ? rawToken.replace(/^[<"']+|[>"']+$/g, '').trim() : null;
+  const emailParam = rawEmail ? rawEmail.replace(/^[<"']+|[>"']+$/g, '').trim().toLowerCase() : null;
 
   let currentSubscriber = null;
 

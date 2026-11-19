@@ -1388,41 +1388,14 @@ textarea.form-input {
 .newsletter-form {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
   width: 100%;
 }
-.newsletter-input {
+.newsletter-form .form-group {
+  margin-bottom: 1.25rem;
   width: 100%;
-  padding: 0.95rem 1.25rem;
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid rgba(139, 115, 85, 0.2);
-  border-right: 1px solid rgba(139, 115, 85, 0.2);
-  border-radius: 14px;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  color: #1c1612;
-  box-sizing: border-box;
-  outline: none;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 2px 4px rgba(90, 70, 50, 0.04);
-}
-.newsletter-input:focus {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(139, 115, 85, 0.4);
-  box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.12);
 }
 .newsletter-submit-btn {
-  width: 100%;
-  padding: 0.95rem !important;
-  border-radius: 14px !important;
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  box-sizing: border-box;
+  margin: 1.25rem auto 0 auto !important;
 }
 .newsletter-status {
   padding: 0.75rem 1rem;
@@ -1451,6 +1424,85 @@ textarea.form-input {
   color: #8b7355;
   opacity: 0.8;
   text-align: center;
+}
+
+/* ---- Liquid Loader & Success Animation ---- */
+@property --g { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --s { syntax: '<number>'; inherits: false; initial-value: 1.15; }
+
+.newsletter-loader-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0 0.5rem;
+}
+.ld { position: relative; width: 110px; height: 110px; margin: 0 auto; }
+.loader {
+  --size: 15px;    /* dot size */
+  --r: 30px;       /* how far dots drift from the center */
+  --speed: 3.2s;   /* one full cycle */
+  position: absolute; inset: 0;
+  filter: url(#goo);
+}
+.ring { position: absolute; inset: 0; animation: spin calc(var(--speed) * 2) linear infinite; }
+.core, .dot {
+  position: absolute; left: 50%; top: 50%;
+  width: var(--size); height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  border-radius: 50%; background: #1c1612;
+}
+.core { transform: scale(var(--s)); animation: pulse var(--speed) ease-in-out infinite; }
+.dot {
+  --off: calc(var(--i) * 90deg);
+  transform: rotate(var(--off)) translateX(calc(var(--r) * var(--g))) scale(calc(.75 + .3 * (1 - var(--g))));
+  animation: drift var(--speed) cubic-bezier(.65, 0, .35, 1) infinite;
+  animation-delay: calc(var(--i) * var(--speed) / -4);
+}
+.dot:nth-child(1) { --i: 0; } .dot:nth-child(2) { --i: 1; }
+.dot:nth-child(3) { --i: 2; } .dot:nth-child(4) { --i: 3; }
+
+@keyframes spin  { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%, 100% { --s: 1.15; } 50% { --s: 1.5; } }
+@keyframes drift { 0%, 100% { --g: 1; } 50% { --g: 0; } }
+
+/* success state: droplets gather, blob swells, check draws itself */
+.loader.done .dot  { transition: --g .8s cubic-bezier(.65, 0, .35, 1); }
+.loader.done .core { transition: --s .7s cubic-bezier(.34, 1.56, .64, 1) .45s; }
+
+.check {
+  position: absolute; left: 50%; top: 50%;
+  width: 32px; height: 32px; margin: -16px 0 0 -16px;
+  fill: none; stroke: #ffffff; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round;
+  z-index: 10;
+  pointer-events: none;
+}
+.check path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  transition: stroke-dashoffset 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.65s;
+}
+.loader.done + .check path {
+  stroke-dashoffset: 0 !important;
+}
+
+.newsletter-success-msg {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+  margin-top: 1.25rem;
+}
+.newsletter-success-msg.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.success-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  color: #1c1612;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
 }
 
 @media (max-width: 600px) {
@@ -1889,6 +1941,15 @@ document.addEventListener('mousemove', e => {
 </div>
 
 <!-- Beneath the Curve / Newsletter Modal -->
+<svg width="0" height="0" style="position:absolute; display:block;" aria-hidden="true">
+  <defs>
+    <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"/>
+    </filter>
+  </defs>
+</svg>
+
 <div class="modal-overlay" id="newsletter-modal">
   <div class="modal-card newsletter-modal-card">
     <button class="modal-close" id="close-newsletter-modal-btn">×</button>
@@ -1899,21 +1960,40 @@ document.addEventListener('mousemove', e => {
       A letter on technology, intelligence, discoveries and the ideas behind how things work.
     </p>
 
-    <!-- Subscription Form -->
-    <form id="newsletter-form" class="newsletter-form" onsubmit="return false;">
-      <input 
-        type="email" 
-        id="newsletter-email" 
-        class="newsletter-input" 
-        placeholder="Enter your email address..." 
-        required 
-        autocomplete="email"
-      />
-      <button type="submit" id="newsletter-submit-btn" class="contact-btn newsletter-submit-btn">
+    <!-- Subscription Form View -->
+    <form id="newsletter-form" class="newsletter-form" novalidate onsubmit="return false;">
+      <div class="form-group">
+        <input 
+          type="email" 
+          id="newsletter-email" 
+          class="form-input" 
+          placeholder="Enter your email address..." 
+          required 
+          autocomplete="email"
+        />
+      </div>
+      <button type="submit" id="newsletter-submit-btn" class="form-submit newsletter-submit-btn">
         <span class="btn-text">SUBSCRIBE</span>
       </button>
       <div id="newsletter-status" class="newsletter-status" style="display: none;"></div>
     </form>
+
+    <!-- Liquid Loader & Success State View -->
+    <div id="newsletter-loader-wrap" class="newsletter-loader-wrap" style="display: none;">
+      <div class="ld" role="status" aria-label="Subscribing">
+        <div class="loader">
+          <div class="ring">
+            <div class="dot"></div><div class="dot"></div>
+            <div class="dot"></div><div class="dot"></div>
+          </div>
+          <div class="core"></div>
+        </div>
+        <svg class="check" viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg>
+      </div>
+      <div id="newsletter-success-msg" class="newsletter-success-msg">
+        <div class="success-title">You're now part of Beneath the Curve.</div>
+      </div>
+    </div>
 
     <div class="newsletter-modal-footer-note">
       Occasional letters. No noise. Unsubscribe anytime.
@@ -2096,7 +2176,7 @@ document.addEventListener('mousemove', e => {
     }
   });
 
-  // Beneath the Curve / Newsletter Modal Logic
+  // Beneath the Curve / Newsletter Modal & Liquid Loader Logic
   const newsletterModalOverlay = document.getElementById('newsletter-modal');
   const openNewsletterModalBtn = document.getElementById('beneath-curve-btn');
   const closeNewsletterModalBtn = document.getElementById('close-newsletter-modal-btn');
@@ -2104,6 +2184,60 @@ document.addEventListener('mousemove', e => {
   const newsletterEmail = document.getElementById('newsletter-email');
   const newsletterSubmitBtn = document.getElementById('newsletter-submit-btn');
   const newsletterStatus = document.getElementById('newsletter-status');
+  const newsletterLoaderWrap = document.getElementById('newsletter-loader-wrap');
+  const newsletterSuccessMsg = document.getElementById('newsletter-success-msg');
+
+  // Liquid Loader Controls from loader-liquid-success.html
+  const liquidLoader = document.querySelector('.newsletter-loader-wrap .loader');
+  const liquidParts  = () => liquidLoader ? [...liquidLoader.querySelectorAll('.dot, .core')] : [];
+
+  function liquidSuccess() {
+    if (!liquidLoader || liquidLoader.classList.contains('done')) return;
+    liquidParts().forEach(p => {
+      const cs = getComputedStyle(p);
+      p.style.setProperty('--g', cs.getPropertyValue('--g').trim() || '1');
+      p.style.setProperty('--s', cs.getPropertyValue('--s').trim() || '1.15');
+      p.style.animation = 'none';
+    });
+    void liquidLoader.offsetWidth;
+    liquidLoader.classList.add('done');
+    void liquidLoader.offsetWidth;
+    liquidParts().forEach(p => p.classList.contains('dot')
+      ? p.style.setProperty('--g', '0')
+      : p.style.setProperty('--s', '2.7'));
+  }
+
+  function liquidReset() {
+    if (!liquidLoader) return;
+    liquidLoader.classList.remove('done');
+    liquidParts().forEach(p => {
+      p.style.animation = '';
+      p.style.removeProperty('--g');
+      p.style.removeProperty('--s');
+    });
+    if (newsletterSuccessMsg) newsletterSuccessMsg.classList.remove('visible');
+  }
+
+  let loadToken = 0;
+  async function withLoader(promise, minMs = 900) {
+    const token = ++loadToken;
+    liquidReset();
+    const started = Date.now();
+    try {
+      const result = await promise;
+      await new Promise(r => setTimeout(r, Math.max(0, minMs - (Date.now() - started))));
+      if (token === loadToken) {
+        liquidSuccess();
+        if (newsletterSuccessMsg) {
+          setTimeout(() => newsletterSuccessMsg.classList.add('visible'), 700);
+        }
+      }
+      return result;
+    } catch (err) {
+      if (token === loadToken) liquidReset();
+      throw err;
+    }
+  }
 
   function openNewsletterModal() {
     if (newsletterModalOverlay) {
@@ -2117,11 +2251,16 @@ document.addEventListener('mousemove', e => {
     if (newsletterModalOverlay) {
       newsletterModalOverlay.classList.remove('active');
       document.body.style.overflow = '';
-      if (newsletterStatus) {
-        newsletterStatus.style.display = 'none';
-        newsletterStatus.className = 'newsletter-status';
-        newsletterStatus.textContent = '';
-      }
+      setTimeout(() => {
+        liquidReset();
+        if (newsletterLoaderWrap) newsletterLoaderWrap.style.display = 'none';
+        if (newsletterForm) newsletterForm.style.display = 'flex';
+        if (newsletterStatus) {
+          newsletterStatus.style.display = 'none';
+          newsletterStatus.className = 'newsletter-status';
+          newsletterStatus.textContent = '';
+        }
+      }, 350);
     }
   }
 
@@ -2133,7 +2272,7 @@ document.addEventListener('mousemove', e => {
     });
   }
 
-  // Subscribe Form Handler
+  // Subscribe Form Handler using withLoader()
   if (newsletterForm) {
     newsletterForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -2143,26 +2282,29 @@ document.addEventListener('mousemove', e => {
         return;
       }
 
-      const submitText = newsletterSubmitBtn.querySelector('.btn-text');
-      const originalText = submitText ? submitText.textContent : 'SUBSCRIBE';
-      if (submitText) submitText.textContent = 'SUBSCRIBING...';
-      newsletterSubmitBtn.disabled = true;
+      // Hide input form & show liquid loader
+      newsletterForm.style.display = 'none';
+      if (newsletterLoaderWrap) newsletterLoaderWrap.style.display = 'flex';
+
+      // Subscription promise: calls custom / Supabase handler if configured, else realistic simulation
+      const subscribeTask = (async () => {
+        if (window.handleNewsletterSubscribe) {
+          return await window.handleNewsletterSubscribe(email);
+        } else {
+          // Simulation placeholder until Supabase keys are provided
+          await new Promise(r => setTimeout(r, 1400));
+          return { success: true };
+        }
+      })();
 
       try {
-        if (window.handleNewsletterSubscribe) {
-          await window.handleNewsletterSubscribe(email);
-        } else {
-          // Default placeholder / client simulation until Supabase credentials are plugged in
-          await new Promise(r => setTimeout(r, 600));
-          showNewsletterStatus("You're subscribed! Welcome to Beneath the Curve.", 'success');
-          if (newsletterEmail) newsletterEmail.value = '';
-        }
+        await withLoader(subscribeTask);
+        if (newsletterEmail) newsletterEmail.value = '';
       } catch (err) {
         console.error('Subscription error:', err);
+        if (newsletterLoaderWrap) newsletterLoaderWrap.style.display = 'none';
+        newsletterForm.style.display = 'flex';
         showNewsletterStatus(err.message || 'Something went wrong. Please try again.', 'error');
-      } finally {
-        if (submitText) submitText.textContent = originalText;
-        newsletterSubmitBtn.disabled = false;
       }
     });
   }

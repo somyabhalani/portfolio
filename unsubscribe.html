@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>Unsubscribe — Beneath the Curve | Somya Bhalani</title>
+<meta name="description" content="Manage your subscription preferences for Beneath the Curve by Somya Bhalani.">
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap">
+
+<style>
+::selection {
+  background: rgba(139,115,85,0.2);
+  color: #1c1612;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body, html {
+  min-height: 100vh;
+  background-color: #e2dcd1;
+  background-image: 
+    radial-gradient(circle at 10% 0%, rgba(255,255,255,0.85) 0%, transparent 50%),
+    radial-gradient(circle at 90% 100%, rgba(215,200,180,0.8) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(230,221,208,0.5) 0%, transparent 70%);
+  font-family: 'Inter', sans-serif;
+  color: #1c1612;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  font-size: 15px;
+}
+
+/* Liquid Glass Card Container */
+.unsub-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(139, 115, 85, 0.25);
+  border-right: 1px solid rgba(139, 115, 85, 0.25);
+  border-radius: 28px;
+  padding: 3rem 2.5rem 2.5rem;
+  box-shadow: 
+    0 40px 80px -15px rgba(90, 70, 50, 0.12),
+    0 20px 40px -10px rgba(90, 70, 50, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Header Branding */
+.btc-brand {
+  display: inline-block;
+  margin-bottom: 1.75rem;
+  text-decoration: none;
+}
+.btc-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #1c1612;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.btc-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #8b7355;
+  letter-spacing: 0.05em;
+  margin-top: 0.35rem;
+}
+
+/* Divider rule */
+.card-rule {
+  width: 48px;
+  height: 1px;
+  background: rgba(139, 115, 85, 0.3);
+  margin: 0 auto 1.75rem auto;
+}
+
+/* Status Panels */
+.status-panel {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.status-panel.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Typography inside cards */
+.panel-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: #1c1612;
+  margin-bottom: 0.75rem;
+}
+.panel-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #5c5046;
+  margin-bottom: 1.75rem;
+}
+.target-email-pill {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  background: rgba(139, 115, 85, 0.09);
+  border: 1px solid rgba(139, 115, 85, 0.2);
+  border-radius: 9999px;
+  font-family: 'Inter', monospace;
+  font-size: 13px;
+  color: #1c1612;
+  font-weight: 500;
+  margin: 0.35rem 0 1rem;
+  word-break: break-all;
+}
+
+/* Form input */
+.form-group {
+  margin: 1.25rem 0 1.5rem;
+  position: relative;
+  text-align: left;
+}
+.form-group::before {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+  background: rgba(139,115,85,0.3);
+}
+.form-group::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+  background: #8b7355;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.form-group:hover::after,
+.form-group:focus-within::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.form-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(139,115,85,0.3);
+  padding: 0.75rem 0;
+  color: #1c1612;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+.form-input::placeholder {
+  color: rgba(92, 80, 70, 0.55);
+}
+.form-input:focus {
+  border-bottom: 1px solid #8b7355;
+}
+
+/* Button Styling (Matching Portfolio Liquid Glass) */
+.btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.unsub-btn-primary {
+  display: block;
+  width: 100%;
+  max-width: 270px;
+  padding: 0.95rem 2rem;
+  background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.25) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-bottom: 1px solid rgba(139,115,85,0.25);
+  border-right: 1px solid rgba(139,115,85,0.25);
+  border-radius: 9999px;
+  color: #8a2020;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 
+    0 10px 25px -5px rgba(90, 70, 50, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+.unsub-btn-primary:hover {
+  background: linear-gradient(135deg, rgba(184, 90, 68, 0.12) 0%, rgba(184, 90, 68, 0.22) 100%);
+  color: #701818;
+  border-color: rgba(184, 90, 68, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -6px rgba(184, 90, 68, 0.15);
+}
+.unsub-btn-primary:active {
+  transform: scale(0.97);
+}
+
+.unsub-btn-secondary {
+  display: inline-block;
+  background: transparent;
+  border: none;
+  color: #8b7355;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+.unsub-btn-secondary:hover {
+  color: #1c1612;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Icon Badges */
+.badge-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  margin: 0 auto 1.25rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.badge-icon.success {
+  background: rgba(62, 107, 72, 0.12);
+  color: #2b5133;
+  border: 1px solid rgba(62, 107, 72, 0.25);
+}
+.badge-icon.info {
+  background: rgba(139, 115, 85, 0.12);
+  color: #8b7355;
+  border: 1px solid rgba(139, 115, 85, 0.25);
+}
+.badge-icon.neutral {
+  background: #1c1612;
+  color: #ffffff;
+}
+
+/* Simple Spinner */
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(139, 115, 85, 0.2);
+  border-top-color: #8b7355;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 1.5rem auto;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Card footer note */
+.card-footer {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(139, 115, 85, 0.15);
+  font-size: 12px;
+  color: #8b7355;
+  line-height: 1.5;
+}
+.card-footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2.5px;
+}
+
+@media (max-width: 600px) {
+  .unsub-card {
+    padding: 2.25rem 1.5rem 1.85rem;
+    border-radius: 24px;
+  }
+  .btc-title { font-size: 28px; }
+  .panel-headline { font-size: 23px; }
+}
+</style>
+</head>
+<body>
+
+<div class="unsub-card">
+  <!-- Brand Header -->
+  <a href="/" class="btc-brand" title="Beneath the Curve by Somya Bhalani">
+    <div class="btc-title">Beneath the Curve</div>
+    <div class="btc-subtitle">Ideas worth thinking about.</div>
+  </a>
+
+  <div class="card-rule"></div>
+
+  <!-- State 0: Loading / Verifying -->
+  <div id="panel-loading" class="status-panel active">
+    <div class="spinner"></div>
+    <div class="panel-headline" style="font-size: 21px;">Verifying link...</div>
+    <p class="panel-desc" style="margin-bottom: 0;">Please wait while we check your subscription details.</p>
+  </div>
+
+  <!-- State 1: Confirm Unsubscribe Prompt -->
+  <div id="panel-confirm" class="status-panel">
+    <div class="badge-icon info">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+        <polyline points="22,6 12,13 2,6"></polyline>
+      </svg>
+    </div>
+    <div class="panel-headline">Unsubscribe from Beneath the Curve?</div>
+    <p class="panel-desc">
+      Are you sure you want to stop receiving letters at:
+      <br>
+      <span class="target-email-pill" id="display-target-email">user@example.com</span>
+      <br>
+      You will no longer receive occasional letters on technology, discoveries, and intelligent systems.
+    </p>
+
+    <div class="btn-row">
+      <button type="button" id="confirm-unsub-btn" class="unsub-btn-primary">
+        CONFIRM UNSUBSCRIBE
+      </button>
+      <a href="/" class="unsub-btn-secondary">Keep Me Subscribed · Return to Portfolio</a>
+    </div>
+  </div>
+
+  <!-- State 2: Successfully Unsubscribed (Inactive) -->
+  <div id="panel-success" class="status-panel">
+    <div class="badge-icon neutral">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+    <div class="panel-headline">You've been unsubscribed</div>
+    <p class="panel-desc">
+      Your subscription status is now set to <strong>inactive</strong>. You will not receive any further letters from Beneath the Curve. We're sorry to see you go.
+    </p>
+
+    <div class="btn-row">
+      <button type="button" id="resubscribe-btn" class="unsub-btn-secondary" style="font-weight: 600; text-decoration: underline;">
+        Unsubscribed by mistake? Click to re-subscribe
+      </button>
+      <a href="/" class="unsub-btn-secondary" style="margin-top: 0.5rem;">Return to Somya Bhalani's Portfolio</a>
+    </div>
+  </div>
+
+  <!-- State 3: Already Inactive / Unsubscribed -->
+  <div id="panel-already" class="status-panel">
+    <div class="badge-icon info">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    </div>
+    <div class="panel-headline">Already Unsubscribed</div>
+    <p class="panel-desc">
+      <span class="target-email-pill" id="already-target-email">user@example.com</span>
+      <br>
+      This email is already marked as <strong>inactive</strong>. You are not subscribed and will not receive any letters.
+    </p>
+
+    <div class="btn-row">
+      <button type="button" id="already-resubscribe-btn" class="unsub-btn-secondary" style="font-weight: 600; text-decoration: underline;">
+        Want to receive letters again? Re-subscribe
+      </button>
+      <a href="/" class="unsub-btn-secondary" style="margin-top: 0.5rem;">Return to Portfolio</a>
+    </div>
+  </div>
+
+  <!-- State 4: Subscription Not Found / Manual Form -->
+  <div id="panel-notfound" class="status-panel">
+    <div class="badge-icon info">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+      </svg>
+    </div>
+    <div class="panel-headline">Subscription Not Found</div>
+    <p class="panel-desc">
+      We couldn't find an active subscription associated with this link. It may have expired or is not present in our records.
+      <br><br>
+      You can enter your email address below to unsubscribe manually:
+    </p>
+
+    <form id="manual-unsub-form" onsubmit="return false;">
+      <div class="form-group">
+        <input type="email" id="manual-email-input" class="form-input" placeholder="Enter your email address..." required autocomplete="email">
+      </div>
+      <div class="btn-row">
+        <button type="submit" id="manual-unsub-submit" class="unsub-btn-primary">
+          UNSUBSCRIBE EMAIL
+        </button>
+        <a href="/" class="unsub-btn-secondary">Return to Portfolio</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Footer Note -->
+  <div class="card-footer">
+    A letter on technology and discoveries by <a href="https://www.linkedin.com/in/somyabhalani" target="_blank" rel="noopener noreferrer">Somya Bhalani</a>.
+  </div>
+</div>
+
+<script>
+  // Elements
+  const panels = {
+    loading: document.getElementById('panel-loading'),
+    confirm: document.getElementById('panel-confirm'),
+    success: document.getElementById('panel-success'),
+    already: document.getElementById('panel-already'),
+    notfound: document.getElementById('panel-notfound')
+  };
+
+  const displayTargetEmail = document.getElementById('display-target-email');
+  const alreadyTargetEmail = document.getElementById('already-target-email');
+  const confirmUnsubBtn = document.getElementById('confirm-unsub-btn');
+  const resubscribeBtn = document.getElementById('resubscribe-btn');
+  const alreadyResubscribeBtn = document.getElementById('already-resubscribe-btn');
+  const manualUnsubForm = document.getElementById('manual-unsub-form');
+  const manualEmailInput = document.getElementById('manual-email-input');
+
+  function showPanel(name) {
+    Object.keys(panels).forEach(key => {
+      if (panels[key]) {
+        panels[key].classList.remove('active');
+        panels[key].style.display = 'none';
+      }
+    });
+    if (panels[name]) {
+      panels[name].style.display = 'block';
+      setTimeout(() => panels[name].classList.add('active'), 20);
+    }
+  }
+
+  // Parse URL Parameters (?token=... or ?email=...)
+  const urlParams = new URLSearchParams(window.location.search);
+  const tokenParam = urlParams.get('token');
+  const emailParam = urlParams.get('email');
+
+  let currentSubscriber = null;
+
+  // Supabase Handler placeholder (will connect with live keys)
+  async function verifySubscriber() {
+    // If Supabase client is configured in future:
+    if (window.supabase) {
+      try {
+        let query = window.supabase.from('subscribers').select('*');
+        if (tokenParam) query = query.eq('unsubscribe_token', tokenParam);
+        else if (emailParam) query = query.eq('email', emailParam.toLowerCase());
+        else {
+          showPanel('notfound');
+          return;
+        }
+
+        const { data, error } = await query.single();
+        if (error || !data) {
+          showPanel('notfound');
+          return;
+        }
+
+        currentSubscriber = data;
+        if (data.status === 'inactive' || data.status === 'unsubscribed') {
+          if (alreadyTargetEmail) alreadyTargetEmail.textContent = data.email;
+          showPanel('already');
+        } else {
+          if (displayTargetEmail) displayTargetEmail.textContent = data.email;
+          showPanel('confirm');
+        }
+      } catch (e) {
+        showPanel('notfound');
+      }
+    } else {
+      // Prototype / Demo Simulation:
+      await new Promise(r => setTimeout(r, 600));
+
+      if (!tokenParam && !emailParam) {
+        // No parameters provided -> Show manual lookup / not found
+        showPanel('notfound');
+        return;
+      }
+
+      const email = emailParam || (tokenParam === 'already' ? 'subscriber@example.com' : 'reader@example.com');
+      currentSubscriber = { email: email, status: tokenParam === 'already' ? 'inactive' : 'active' };
+
+      if (currentSubscriber.status === 'inactive') {
+        if (alreadyTargetEmail) alreadyTargetEmail.textContent = currentSubscriber.email;
+        showPanel('already');
+      } else {
+        if (displayTargetEmail) displayTargetEmail.textContent = currentSubscriber.email;
+        showPanel('confirm');
+      }
+    }
+  }
+
+  // Handle Unsubscribe Action
+  async function performUnsubscribe(email) {
+    if (window.supabase && currentSubscriber) {
+      const { error } = await window.supabase
+        .from('subscribers')
+        .update({ 
+          status: 'inactive', 
+          unsubscribed_at: new Date().toISOString() 
+        })
+        .eq('id', currentSubscriber.id);
+        
+      if (error) {
+        alert('Could not update status: ' + error.message);
+        return;
+      }
+    } else {
+      // Simulation delay
+      await new Promise(r => setTimeout(r, 400));
+    }
+
+    showPanel('success');
+  }
+
+  // Handle Re-subscribe Action
+  async function performResubscribe() {
+    if (window.supabase && currentSubscriber) {
+      await window.supabase
+        .from('subscribers')
+        .update({ 
+          status: 'active', 
+          unsubscribed_at: null 
+        })
+        .eq('id', currentSubscriber.id);
+    } else {
+      await new Promise(r => setTimeout(r, 400));
+    }
+
+    alert('You have been re-subscribed to Beneath the Curve!');
+    window.location.href = '/';
+  }
+
+  // Event Listeners
+  if (confirmUnsubBtn) {
+    confirmUnsubBtn.addEventListener('click', () => {
+      confirmUnsubBtn.textContent = 'UPDATING...';
+      confirmUnsubBtn.disabled = true;
+      performUnsubscribe(currentSubscriber ? currentSubscriber.email : '');
+    });
+  }
+
+  if (resubscribeBtn) resubscribeBtn.addEventListener('click', performResubscribe);
+  if (alreadyResubscribeBtn) alreadyResubscribeBtn.addEventListener('click', performResubscribe);
+
+  if (manualUnsubForm) {
+    manualUnsubForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = manualEmailInput ? manualEmailInput.value.trim().toLowerCase() : '';
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      currentSubscriber = { email: email };
+      performUnsubscribe(email);
+    });
+  }
+
+  // Initialize
+  verifySubscriber();
+</script>
+</body>
+</html>

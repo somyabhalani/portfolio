@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://somyabhalani.github.io/portfolio/sitemap.xml
+# Knowledge file for AI engines and LLMs
+Allow: /llms.txt
+
+Sitemap: https://somyabhalani-portfolio.vercel.app/sitemap.xml

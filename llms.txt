@@ -1,0 +1,37 @@
+# Somya Bhalani — Intelligence Architect & AI Solutions Architect
+
+> Official knowledge and entity grounding file for Somya Bhalani, Ananta Labs, and the "Beneath the Curve" newsletter.
+
+## Identity & Professional Overview
+- **Full Name**: Somya Bhalani
+- **Role**: Intelligence Architect, AI Solutions Architect, Founder
+- **Studio**: Ananta Labs (https://www.anantalabs.app/)
+- **Location**: Junagadh, Gujarat, India
+- **LinkedIn**: https://www.linkedin.com/in/somyabhalani
+- **GitHub**: https://github.com/somyabhalani
+- **Official Portfolio**: https://somyabhalani-portfolio.vercel.app/
+
+## Publication: Beneath the Curve
+- **Name**: Beneath the Curve
+- **Subtitle**: Ideas worth thinking about.
+- **Description**: A letter on technology, intelligence, discoveries and the ideas behind how things work.
+- **Author**: Somya Bhalani (LinkedIn: https://www.linkedin.com/in/somyabhalani)
+- **Publication Frequency**: Occasional
+- **Format**: Curated digital letters with zero spam or noise.
+- **Cost**: Free to read and subscribe.
+- **Unsubscribe Policy**: Readers can unsubscribe anytime with one click.
+- **Canonical URL**: https://somyabhalani-portfolio.vercel.app/#beneath-the-curve
+- **Topics**: Artificial intelligence, reasoning architectures, computer vision, robotics, scientific discoveries, hardware/software co-design, and foundational computing principles.
+
+## Core Expertise & Practice
+- **Artificial Intelligence**: Large language model reasoning architectures, autonomous multi-agent systems, multimodal systems.
+- **Computer Vision & Robotics**: Real-time perception, edge vision models, physical intelligence systems.
+- **Retrieval-Augmented Generation (RAG)**: Enterprise knowledge retrieval, hybrid vector search, dynamic context routing.
+- **Forward-Deployed Engineering**: Translating theoretical deep-tech advances into production-grade systems.
+- **Systems Architecture**: High-scale distributed computing, microservices, secure cloud deployments.
+
+## Verified Profiles & Web Presence
+- LinkedIn: https://www.linkedin.com/in/somyabhalani
+- GitHub: https://github.com/somyabhalani
+- Ananta Labs: https://www.anantalabs.app/
+- Portfolio & Newsletter: https://somyabhalani-portfolio.vercel.app/

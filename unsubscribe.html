@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="icon" type="image/png" href="favicon.png">
 <title>Unsubscribe — Beneath the Curve | Somya Bhalani</title>
 <meta name="description" content="Manage your subscription preferences for Beneath the Curve by Somya Bhalani.">
@@ -16,10 +16,19 @@
   color: #1c1612;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-body, html {
-  min-height: 100vh;
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
   background-color: #e2dcd1;
   background-image: 
     radial-gradient(circle at 10% 0%, rgba(255,255,255,0.85) 0%, transparent 50%),
@@ -30,121 +39,87 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
-  font-size: 15px;
+  font-size: 14px;
 }
 
-/* Card Container with Bespoke Ornate Arch Background */
+/* Card Container with Bespoke Ornate Arch Background & Rounded Corners */
 .unsub-card {
   position: relative;
-  width: min(92vw, 470px);
-  aspect-ratio: 736 / 1104;
-  min-height: min(705px, 90vh);
+  height: min(88vh, 670px);
+  max-height: calc(100vh - 1.5rem);
+  aspect-ratio: 646 / 1024;
+  max-width: min(92vw, 430px);
   background: url('./assets/btc-card-bg.jpg') center center / cover no-repeat;
-  border-radius: 22px;
-  padding: 24% 13% 16% 13%;
+  border-radius: 28px;
+  overflow: hidden;
   box-shadow: 
     0 35px 80px -15px rgba(25, 20, 15, 0.4),
     0 15px 35px -8px rgba(25, 20, 15, 0.25),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  overflow: hidden;
+  padding: 16% 9% 14% 9%;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Card Content Frame */
-.card-content-frame {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Header Branding */
-.btc-brand {
-  display: inline-block;
-  margin-bottom: 0.85rem;
-  text-decoration: none;
-}
-.btc-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 30px;
-  font-weight: 600;
-  color: #1c1612;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-}
-.btc-subtitle {
-  font-family: 'Inter', sans-serif;
-  font-size: 12.5px;
-  font-weight: 500;
-  color: #7d674f;
-  letter-spacing: 0.06em;
-  margin-top: 0.25rem;
-}
-
-/* Divider rule */
-.card-rule {
-  width: 44px;
-  height: 1px;
-  background: rgba(125, 103, 79, 0.35);
-  margin: 0 auto 0.85rem auto;
 }
 
 /* Status Panels */
 .status-panel {
   display: none;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .status-panel.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Typography inside cards */
+/* Typography inside card */
 .panel-headline {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
+  font-size: clamp(19px, 3.2vh, 23px);
   font-weight: 600;
   color: #1c1612;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.45rem;
   line-height: 1.25;
 }
 .panel-desc {
-  font-size: 13.5px;
-  line-height: 1.55;
+  font-size: clamp(11.5px, 1.8vh, 13px);
+  line-height: 1.45;
   color: #4a3e33;
-  margin-bottom: 1.35rem;
+  margin-bottom: 1rem;
+  max-width: 90%;
 }
 .target-email-pill {
   display: inline-block;
-  padding: 0.3rem 0.8rem;
+  padding: 0.25rem 0.75rem;
   background: rgba(125, 103, 79, 0.12);
   border: 1px solid rgba(125, 103, 79, 0.25);
   border-radius: 9999px;
   font-family: 'Inter', monospace;
-  font-size: 12.5px;
+  font-size: 12px;
   color: #1c1612;
   font-weight: 500;
-  margin: 0.25rem 0 0.85rem;
+  margin: 0.25rem 0 0.65rem;
   word-break: break-all;
 }
 
 /* Form input */
 .form-group {
-  margin: 0.85rem 0 1.25rem;
+  margin: 0.65rem 0 1rem;
   position: relative;
   text-align: left;
+  width: 100%;
+  max-width: 250px;
 }
 .form-group::before {
   content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
@@ -167,10 +142,10 @@ body, html {
   background: transparent;
   border: none;
   border-bottom: 1px solid rgba(125, 103, 79, 0.35);
-  padding: 0.65rem 0;
+  padding: 0.55rem 0;
   color: #1c1612;
   font-family: 'Inter', sans-serif;
-  font-size: 14.5px;
+  font-size: 13.5px;
   outline: none;
   transition: all 0.3s ease;
   text-align: center;
@@ -182,28 +157,31 @@ body, html {
   border-bottom: 1px solid #7d674f;
 }
 
-/* Button Styling (Matching Portfolio Liquid Glass) */
+/* Button Styling (Matching Portfolio Signature Liquid Glass Theme) */
 .btn-row {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.45rem;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .unsub-btn-primary {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  max-width: 250px;
-  padding: 0.85rem 1.8rem;
+  max-width: 240px;
+  padding: 0.75rem 1.6rem;
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid rgba(125, 103, 79, 0.3);
-  border-right: 1px solid rgba(125, 103, 79, 0.3);
+  border-bottom: 1px solid rgba(139, 115, 85, 0.35);
+  border-right: 1px solid rgba(139, 115, 85, 0.35);
   border-radius: 9999px;
-  color: #8a2020;
+  color: #8b7355; /* Portfolio Signature Color */
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 600;
@@ -211,32 +189,33 @@ body, html {
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: 
-    0 8px 20px -4px rgba(90, 70, 50, 0.12),
+    0 8px 24px -4px rgba(90, 70, 50, 0.12),
     inset 0 1px 1px rgba(255, 255, 255, 0.95);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
+  line-height: 1;
 }
 .unsub-btn-primary:hover {
-  background: rgba(184, 90, 68, 0.15);
-  color: #701818;
-  border-color: rgba(184, 90, 68, 0.4);
+  background: rgba(255, 255, 255, 0.95);
+  color: #1c1612;
+  border-color: rgba(255, 255, 255, 1);
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px -5px rgba(184, 90, 68, 0.18);
+  box-shadow: 0 12px 28px -4px rgba(90, 70, 50, 0.18);
 }
 .unsub-btn-primary:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 .unsub-btn-secondary {
   display: inline-block;
   background: transparent;
   border: none;
-  color: #6b5840;
+  color: #7d674f;
   font-family: 'Inter', sans-serif;
-  font-size: 12.5px;
+  font-size: 11.5px;
   font-weight: 500;
   cursor: pointer;
-  padding: 0.35rem 0.75rem;
+  padding: 0.25rem 0.6rem;
   transition: color 0.2s ease;
   text-decoration: none;
 }
@@ -248,131 +227,181 @@ body, html {
 
 /* Icon Badges */
 .badge-icon {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  margin: 0 auto 0.85rem auto;
+  margin: 0 auto 0.65rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.badge-icon.success {
-  background: rgba(62, 107, 72, 0.15);
-  color: #2b5133;
-  border: 1px solid rgba(62, 107, 72, 0.3);
-}
 .badge-icon.info {
-  background: rgba(125, 103, 79, 0.15);
-  color: #7d674f;
-  border: 1px solid rgba(125, 103, 79, 0.3);
-}
-.badge-icon.neutral {
-  background: #1c1612;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(28, 22, 18, 0.25);
+  background: rgba(139, 115, 85, 0.15);
+  color: #8b7355;
+  border: 1px solid rgba(139, 115, 85, 0.3);
 }
 
-/* Simple Spinner */
-.spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid rgba(125, 103, 79, 0.2);
-  border-top-color: #7d674f;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 1.25rem auto;
+/* ---- Liquid Loader & Success Animation ---- */
+@property --g { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --s { syntax: '<number>'; inherits: false; initial-value: 1.15; }
+
+.ld { position: relative; width: 90px; height: 90px; margin: 0.25rem auto 0.15rem; }
+.loader {
+  --size: 13px;    /* dot size */
+  --r: 25px;       /* how far dots drift from the center */
+  --speed: 3.2s;   /* one full cycle */
+  position: absolute; inset: 0;
+  filter: url(#goo);
 }
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.ring { position: absolute; inset: 0; animation: spin calc(var(--speed) * 2) linear infinite; }
+.core, .dot {
+  position: absolute; left: 50%; top: 50%;
+  width: var(--size); height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  border-radius: 50%; background: #1c1612;
+}
+.core { transform: scale(var(--s)); animation: pulse var(--speed) ease-in-out infinite; }
+.dot {
+  --off: calc(var(--i) * 90deg);
+  transform: rotate(var(--off)) translateX(calc(var(--r) * var(--g))) scale(calc(.75 + .3 * (1 - var(--g))));
+  animation: drift var(--speed) cubic-bezier(.65, 0, .35, 1) infinite;
+  animation-delay: calc(var(--i) * var(--speed) / -4);
+}
+.dot:nth-child(1) { --i: 0; } .dot:nth-child(2) { --i: 1; }
+.dot:nth-child(3) { --i: 2; } .dot:nth-child(4) { --i: 3; }
+
+@keyframes spin  { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%, 100% { --s: 1.15; } 50% { --s: 1.5; } }
+@keyframes drift { 0%, 100% { --g: 1; } 50% { --g: 0; } }
+
+/* success state */
+.loader.done .dot  { transition: --g .8s cubic-bezier(.65, 0, .35, 1); }
+.loader.done .core { transition: --s .7s cubic-bezier(.34, 1.56, .64, 1) .45s; }
+
+.check {
+  position: absolute; left: 50%; top: 50%;
+  width: 28px; height: 28px; margin: -14px 0 0 -14px;
+  fill: none; stroke: #ffffff; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round;
+  z-index: 10; pointer-events: none;
+}
+.check path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  transition: stroke-dashoffset 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.65s;
+}
+.loader.done + .check path {
+  stroke-dashoffset: 0 !important;
 }
 
-/* Card footer note */
-.card-footer {
-  margin-top: 0.85rem;
-  padding-top: 0.65rem;
-  font-size: 11.5px;
-  color: #7d674f;
-  line-height: 1.4;
+.unsub-success-content {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
 }
-.card-footer a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 2.5px;
-  font-weight: 500;
+.unsub-success-content.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-@media (max-width: 600px) {
+@media (max-height: 650px) {
   .unsub-card {
-    border-radius: 18px;
-    padding: 16% 11% 16% 11%;
+    height: 94vh;
+    padding: 14% 8% 12% 8%;
+    border-radius: 22px;
   }
-  .btc-title { font-size: 26px; }
-  .panel-headline { font-size: 21px; }
-  .panel-desc { font-size: 12.5px; line-height: 1.5; margin-bottom: 1rem; }
-  .unsub-btn-primary { font-size: 11.5px; padding: 0.75rem 1.4rem; max-width: 230px; }
-  .badge-icon { width: 42px; height: 42px; margin-bottom: 0.65rem; }
+  .ld { width: 75px; height: 75px; }
+  .badge-icon { width: 34px; height: 34px; margin-bottom: 0.4rem; }
+  .panel-headline { font-size: 18px; margin-bottom: 0.3rem; }
+  .panel-desc { font-size: 11px; margin-bottom: 0.65rem; }
+  .unsub-btn-primary { font-size: 11px; padding: 0.65rem 1.3rem; max-width: 210px; }
 }
 </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute; display:block;" aria-hidden="true">
+  <defs>
+    <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"/>
+    </filter>
+  </defs>
+</svg>
+
 <div class="unsub-card">
   <!-- State 0: Loading / Verifying -->
   <div id="panel-loading" class="status-panel active">
-    <div class="spinner"></div>
-    <div class="panel-headline" style="font-size: 21px;">Verifying link...</div>
-    <p class="panel-desc" style="margin-bottom: 0;">Please wait while we check your subscription details.</p>
+    <div class="ld" role="status" aria-label="Verifying link">
+      <div class="loader">
+        <div class="ring">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div>
+        </div>
+        <div class="core"></div>
+      </div>
+    </div>
+    <div class="panel-headline" style="font-size: 20px; margin-top: 0.85rem;">Verifying link...</div>
+    <p class="panel-desc" style="margin-bottom: 0;">Checking your subscription preferences.</p>
   </div>
 
   <!-- State 1: Confirm Unsubscribe Prompt -->
   <div id="panel-confirm" class="status-panel">
     <div class="badge-icon info">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
         <polyline points="22,6 12,13 2,6"></polyline>
       </svg>
     </div>
     <div class="panel-headline">Unsubscribe from Beneath the Curve?</div>
     <p class="panel-desc">
-      Are you sure you want to stop receiving letters at:
+      Stop receiving letters at:
       <br>
-      <span class="target-email-pill" id="display-target-email">user@example.com</span>
+      <span class="target-email-pill" id="display-target-email">reader@example.com</span>
       <br>
-      You will no longer receive occasional letters on technology, discoveries, and intelligent systems.
+      You'll no longer receive letters on technology, discoveries, and intelligent systems.
     </p>
 
     <div class="btn-row">
       <button type="button" id="confirm-unsub-btn" class="unsub-btn-primary">
         CONFIRM UNSUBSCRIBE
       </button>
-      <a href="/" class="unsub-btn-secondary">Keep Me Subscribed · Return to Portfolio</a>
+      <a href="/" class="unsub-btn-secondary">Keep Subscribed · Return to Portfolio</a>
     </div>
   </div>
 
-  <!-- State 2: Successfully Unsubscribed (Inactive) -->
+  <!-- State 2: Successfully Unsubscribed (Inactive) with Liquid Animation -->
   <div id="panel-success" class="status-panel">
-    <div class="badge-icon neutral">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 13l4 4L19 7"></path>
-      </svg>
+    <div class="ld" role="status" aria-label="Unsubscribing">
+      <div class="loader">
+        <div class="ring">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div>
+        </div>
+        <div class="core"></div>
+      </div>
+      <svg class="check" viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9"/></svg>
     </div>
-    <div class="panel-headline">You've been unsubscribed</div>
-    <p class="panel-desc">
-      Your subscription status is now set to <strong>inactive</strong>. You will not receive any further letters from Beneath the Curve. We're sorry to see you go.
-    </p>
 
-    <div class="btn-row">
-      <button type="button" id="resubscribe-btn" class="unsub-btn-secondary" style="font-weight: 600; text-decoration: underline;">
-        Unsubscribed by mistake? Click to re-subscribe
-      </button>
-      <a href="/" class="unsub-btn-secondary" style="margin-top: 0.5rem;">Return to Somya Bhalani's Portfolio</a>
+    <div id="unsub-success-content" class="unsub-success-content">
+      <div class="panel-headline" style="margin-top: 0.65rem;">You've been unsubscribed</div>
+      <p class="panel-desc" style="margin-bottom: 0.85rem;">
+        Your status is now set to <strong>inactive</strong>. You will not receive any further letters from Beneath the Curve.
+      </p>
+
+      <div class="btn-row">
+        <button type="button" id="resubscribe-btn" class="unsub-btn-secondary" style="font-weight: 600; text-decoration: underline;">
+          Unsubscribed by mistake? Re-subscribe
+        </button>
+        <a href="/" class="unsub-btn-secondary" style="margin-top: 0.2rem;">Return to Somya Bhalani's Portfolio</a>
+      </div>
     </div>
   </div>
 
   <!-- State 3: Already Inactive / Unsubscribed -->
   <div id="panel-already" class="status-panel">
     <div class="badge-icon info">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
         <line x1="12" y1="8" x2="12" y2="12"></line>
         <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -380,41 +409,39 @@ body, html {
     </div>
     <div class="panel-headline">Already Unsubscribed</div>
     <p class="panel-desc">
-      <span class="target-email-pill" id="already-target-email">user@example.com</span>
+      <span class="target-email-pill" id="already-target-email">reader@example.com</span>
       <br>
-      This email is already marked as <strong>inactive</strong>. You are not subscribed and will not receive any letters.
+      This email is already marked as <strong>inactive</strong>. You will not receive any letters.
     </p>
 
     <div class="btn-row">
       <button type="button" id="already-resubscribe-btn" class="unsub-btn-secondary" style="font-weight: 600; text-decoration: underline;">
         Want to receive letters again? Re-subscribe
       </button>
-      <a href="/" class="unsub-btn-secondary" style="margin-top: 0.5rem;">Return to Portfolio</a>
+      <a href="/" class="unsub-btn-secondary" style="margin-top: 0.35rem;">Return to Portfolio</a>
     </div>
   </div>
 
   <!-- State 4: Subscription Not Found / Manual Form -->
   <div id="panel-notfound" class="status-panel">
     <div class="badge-icon info">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
         <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
       </svg>
     </div>
     <div class="panel-headline">Subscription Not Found</div>
     <p class="panel-desc">
-      We couldn't find an active subscription associated with this link. It may have expired or is not present in our records.
-      <br><br>
-      You can enter your email address below to unsubscribe manually:
+      We couldn't locate an active subscription for this link. Enter your email below to unsubscribe:
     </p>
 
-    <form id="manual-unsub-form" onsubmit="return false;">
+    <form id="manual-unsub-form" style="width: 100%; display: flex; flex-direction: column; align-items: center;" onsubmit="return false;">
       <div class="form-group">
         <input type="email" id="manual-email-input" class="form-input" placeholder="Enter your email address..." required autocomplete="email">
       </div>
       <div class="btn-row">
         <button type="submit" id="manual-unsub-submit" class="unsub-btn-primary">
-          UNSUBSCRIBE EMAIL
+          CONFIRM UNSUBSCRIBE
         </button>
         <a href="/" class="unsub-btn-secondary">Return to Portfolio</a>
       </div>
@@ -439,6 +466,59 @@ body, html {
   const alreadyResubscribeBtn = document.getElementById('already-resubscribe-btn');
   const manualUnsubForm = document.getElementById('manual-unsub-form');
   const manualEmailInput = document.getElementById('manual-email-input');
+  const unsubSuccessContent = document.getElementById('unsub-success-content');
+
+  // Liquid Loader Controls for Panel Success
+  const liquidLoader = document.querySelector('#panel-success .loader');
+  const liquidParts  = () => liquidLoader ? [...liquidLoader.querySelectorAll('.dot, .core')] : [];
+
+  function liquidSuccess() {
+    if (!liquidLoader || liquidLoader.classList.contains('done')) return;
+    liquidParts().forEach(p => {
+      const cs = getComputedStyle(p);
+      p.style.setProperty('--g', cs.getPropertyValue('--g').trim() || '1');
+      p.style.setProperty('--s', cs.getPropertyValue('--s').trim() || '1.15');
+      p.style.animation = 'none';
+    });
+    void liquidLoader.offsetWidth;
+    liquidLoader.classList.add('done');
+    void liquidLoader.offsetWidth;
+    liquidParts().forEach(p => p.classList.contains('dot')
+      ? p.style.setProperty('--g', '0')
+      : p.style.setProperty('--s', '2.7'));
+  }
+
+  function liquidReset() {
+    if (!liquidLoader) return;
+    liquidLoader.classList.remove('done');
+    liquidParts().forEach(p => {
+      p.style.animation = '';
+      p.style.removeProperty('--g');
+      p.style.removeProperty('--s');
+    });
+    if (unsubSuccessContent) unsubSuccessContent.classList.remove('visible');
+  }
+
+  let loadToken = 0;
+  async function withLoader(promise, minMs = 1100) {
+    const token = ++loadToken;
+    liquidReset();
+    const started = Date.now();
+    try {
+      const result = await promise;
+      await new Promise(r => setTimeout(r, Math.max(0, minMs - (Date.now() - started))));
+      if (token === loadToken) {
+        liquidSuccess();
+        if (unsubSuccessContent) {
+          setTimeout(() => unsubSuccessContent.classList.add('visible'), 700);
+        }
+      }
+      return result;
+    } catch (err) {
+      if (token === loadToken) liquidReset();
+      throw err;
+    }
+  }
 
   function showPanel(name) {
     Object.keys(panels).forEach(key => {
@@ -448,7 +528,7 @@ body, html {
       }
     });
     if (panels[name]) {
-      panels[name].style.display = 'block';
+      panels[name].style.display = 'flex';
       setTimeout(() => panels[name].classList.add('active'), 20);
     }
   }
@@ -460,9 +540,8 @@ body, html {
 
   let currentSubscriber = null;
 
-  // Supabase Handler placeholder (will connect with live keys)
   async function verifySubscriber() {
-    // If Supabase client is configured in future:
+    // If Supabase client is configured:
     if (window.supabase) {
       try {
         let query = window.supabase.from('subscribers').select('*');
@@ -491,11 +570,10 @@ body, html {
         showPanel('notfound');
       }
     } else {
-      // Prototype / Demo Simulation:
+      // Prototype / Demo Verification Delay
       await new Promise(r => setTimeout(r, 600));
 
       if (!tokenParam && !emailParam) {
-        // No parameters provided -> Show manual lookup / not found
         showPanel('notfound');
         return;
       }
@@ -513,27 +591,34 @@ body, html {
     }
   }
 
-  // Handle Unsubscribe Action
+  // Handle Unsubscribe Action with Liquid Animation
   async function performUnsubscribe(email) {
-    if (window.supabase && currentSubscriber) {
-      const { error } = await window.supabase
-        .from('subscribers')
-        .update({ 
-          status: 'inactive', 
-          unsubscribed_at: new Date().toISOString() 
-        })
-        .eq('id', currentSubscriber.id);
-        
-      if (error) {
-        alert('Could not update status: ' + error.message);
-        return;
-      }
-    } else {
-      // Simulation delay
-      await new Promise(r => setTimeout(r, 400));
-    }
-
     showPanel('success');
+
+    const unsubscribeTask = (async () => {
+      if (window.supabase && currentSubscriber) {
+        const { error } = await window.supabase
+          .from('subscribers')
+          .update({ 
+            status: 'inactive', 
+            unsubscribed_at: new Date().toISOString() 
+          })
+          .eq('id', currentSubscriber.id);
+          
+        if (error) throw error;
+      } else {
+        // Prototype simulation delay
+        await new Promise(r => setTimeout(r, 900));
+      }
+      return { success: true };
+    })();
+
+    try {
+      await withLoader(unsubscribeTask);
+    } catch (e) {
+      alert('Could not update status: ' + (e.message || e));
+      showPanel('confirm');
+    }
   }
 
   // Handle Re-subscribe Action
@@ -557,8 +642,6 @@ body, html {
   // Event Listeners
   if (confirmUnsubBtn) {
     confirmUnsubBtn.addEventListener('click', () => {
-      confirmUnsubBtn.textContent = 'UPDATING...';
-      confirmUnsubBtn.disabled = true;
       performUnsubscribe(currentSubscriber ? currentSubscriber.email : '');
     });
   }

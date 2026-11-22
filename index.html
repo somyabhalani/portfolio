@@ -1760,7 +1760,7 @@ textarea.form-input {
       <img id="port-img" src="https://plain-apac-prod-public.komododecks.com/202607/05/Su7WAwrQe16LTaBVatYp/image.jpg" alt="Somya Bhalani"/>
     </div>
     <!-- Top-Right Square Share Button for Mobile -->
-    <button class="contact-btn contact-icon-btn mobile-only-share-btn" id="open-social-modal-btn-mobile" aria-label="Share & Contact" title="Share & Contact">
+    <button type="button" class="contact-btn contact-icon-btn mobile-only-share-btn" id="open-social-modal-btn-mobile" aria-label="Share & Contact" title="Share & Contact">
       <svg class="contact-share-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
         <polyline points="16 6 12 2 8 6"></polyline>
@@ -1805,10 +1805,10 @@ textarea.form-input {
 
   <!-- Actions Area (Reach Out, Resume, Beneath the Curve, Share Icon) -->
   <div class="contact-actions-wrap left-animate">
-    <button class="contact-btn" id="open-modal-btn">REACH OUT</button>
+    <button type="button" class="contact-btn" id="open-modal-btn">REACH OUT</button>
     <a href="./assets/resume.pdf" target="_blank" class="contact-btn" id="resume-btn">RESUME</a>
-    <button class="contact-btn" id="beneath-curve-btn">Beneath the Curve</button>
-    <button class="contact-btn contact-icon-btn desktop-only-share-btn" id="open-social-modal-btn" aria-label="Share & Contact" title="Share & Contact">
+    <button type="button" class="contact-btn" id="beneath-curve-btn">Beneath the Curve</button>
+    <button type="button" class="contact-btn contact-icon-btn desktop-only-share-btn" id="open-social-modal-btn" aria-label="Share & Contact" title="Share & Contact">
       <svg class="contact-share-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
         <polyline points="16 6 12 2 8 6"></polyline>
@@ -2045,7 +2045,7 @@ document.addEventListener('mousemove', e => {
 <!-- Modal Structure -->
 <div class="modal-overlay" id="contact-modal">
   <div class="modal-card">
-    <button class="modal-close" id="close-modal-btn">×</button>
+    <button type="button" class="modal-close" id="close-modal-btn">×</button>
     <div class="modal-title">Start the conversation</div>
     <div id="form-error-msg" class="form-error-msg"></div>
     <form id="contact-form" novalidate>
@@ -2078,7 +2078,7 @@ document.addEventListener('mousemove', e => {
 <!-- Direct Contact / Social & Share Modal -->
 <div class="modal-overlay" id="social-modal">
   <div class="modal-card social-modal-card">
-    <button class="modal-close" id="close-social-modal-btn">×</button>
+    <button type="button" class="modal-close" id="close-social-modal-btn">×</button>
 
     <!-- Panel 1: Direct Connect Channels -->
     <div id="social-view-main" class="modal-view-panel">
@@ -2197,7 +2197,7 @@ document.addEventListener('mousemove', e => {
 
 <div class="modal-overlay" id="newsletter-modal" itemscope itemtype="https://schema.org/Periodical">
   <div class="modal-card newsletter-modal-card">
-    <button class="modal-close" id="close-newsletter-modal-btn">×</button>
+    <button type="button" class="modal-close" id="close-newsletter-modal-btn">×</button>
 
     <div class="modal-title" style="margin-bottom: 0.35rem; font-size: 30px;" itemprop="name">Beneath the Curve</div>
     <div class="newsletter-modal-subtitle" itemprop="headline">Ideas worth thinking about.</div>
@@ -2249,19 +2249,12 @@ document.addEventListener('mousemove', e => {
 </div>
 
 <script>
-  // Modal Scroll Lock helper for iOS Safari & Mobile (prevents viewport shifting/bar summons)
+  // Modal Scroll Lock helper for iOS Safari & Mobile (clean overflow lock without scroll displacement)
   let activeModalCount = 0;
-  let savedScrollY = 0;
 
   function lockBodyScroll() {
     activeModalCount++;
     if (activeModalCount === 1) {
-      savedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${savedScrollY}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
     }
@@ -2270,16 +2263,19 @@ document.addEventListener('mousemove', e => {
   function unlockBodyScroll() {
     activeModalCount = Math.max(0, activeModalCount - 1);
     if (activeModalCount === 0) {
-      document.body.style.removeProperty('position');
-      document.body.style.removeProperty('top');
-      document.body.style.removeProperty('left');
-      document.body.style.removeProperty('right');
-      document.body.style.removeProperty('width');
       document.body.style.removeProperty('overflow');
       document.documentElement.style.removeProperty('overflow');
-      window.scrollTo(0, savedScrollY);
     }
   }
+
+  // Prevent background drag on modal overlays without triggering Safari bar expansion
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('touchmove', (e) => {
+      if (e.target === overlay) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  });
 
   // Modal Logic
   const modalOverlay = document.getElementById('contact-modal');
@@ -2292,6 +2288,7 @@ document.addEventListener('mousemove', e => {
   }
 
   function closeModal() {
+    document.querySelectorAll('#contact-modal input, #contact-modal textarea').forEach(el => el.blur());
     modalOverlay.classList.remove('active');
     unlockBodyScroll();
   }
@@ -2522,9 +2519,6 @@ document.addEventListener('mousemove', e => {
     if (newsletterModalOverlay) {
       newsletterModalOverlay.classList.add('active');
       lockBodyScroll();
-      if (window.location.hash !== '#beneath-the-curve') {
-        history.replaceState(null, '', '#beneath-the-curve');
-      }
       if (newsletterEmail && window.innerWidth > 768) {
         setTimeout(() => newsletterEmail.focus(), 150);
       }
@@ -2532,12 +2526,10 @@ document.addEventListener('mousemove', e => {
   }
 
   function closeNewsletterModal() {
+    if (newsletterEmail) newsletterEmail.blur();
     if (newsletterModalOverlay) {
       newsletterModalOverlay.classList.remove('active');
       unlockBodyScroll();
-      if (window.location.hash === '#beneath-the-curve' || window.location.hash === '#newsletter' || window.location.hash === '#beneath') {
-        history.replaceState(null, '', window.location.pathname + window.location.search);
-      }
       setTimeout(() => {
         liquidReset();
         if (newsletterLoaderWrap) newsletterLoaderWrap.style.display = 'none';
@@ -2639,6 +2631,7 @@ document.addEventListener('mousemove', e => {
   if (newsletterForm) {
     newsletterForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (newsletterEmail) newsletterEmail.blur();
       const email = newsletterEmail ? newsletterEmail.value.trim().toLowerCase() : '';
       if (!email || !email.includes('@')) {
         showNewsletterStatus('Please enter a valid email address.', 'error');

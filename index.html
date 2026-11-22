@@ -808,13 +808,22 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 }
 
 @media (max-width: 1150px) {
-  body, html {
+  html {
     display: block;
-    padding: max(0.6rem, env(safe-area-inset-top, 0.6rem)) max(0.5rem, env(safe-area-inset-right, 0.5rem)) max(0.6rem, env(safe-area-inset-bottom, 0.6rem)) max(0.5rem, env(safe-area-inset-left, 0.5rem));
     height: auto;
     min-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    display: block;
+    padding: max(0.6rem, env(safe-area-inset-top, 0.6rem)) max(0.5rem, env(safe-area-inset-right, 0.5rem)) max(0.6rem, env(safe-area-inset-bottom, 0.6rem)) max(0.5rem, env(safe-area-inset-left, 0.5rem));
+    height: auto;
+    min-height: 100%;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
     -webkit-text-size-adjust: 100%;
   }
   .pg { 

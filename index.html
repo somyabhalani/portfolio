@@ -1759,6 +1759,24 @@ textarea.form-input {
     padding: 1.75rem 1.25rem 1.5rem !important;
   }
 }
+
+/* Page Transition */
+:root { --pt-bg: #e2dcd1; --curve: 9vh; }
+.pt { position: fixed; inset: 0; z-index: 99999; pointer-events: none; overflow: hidden; }
+.pt-panel {
+  position: absolute; left: -10vw; right: -10vw; top: calc(var(--curve) * -1);
+  height: calc(100% + var(--curve) * 2); border-radius: 50% / var(--curve);
+  background: linear-gradient(180deg, #f7f4ef 0%, var(--pt-bg) 60%, #ebe4d9 100%);
+  box-shadow: 0 -10px 40px rgba(138,109,75,.12), 0 14px 40px rgba(138,109,75,.16);
+  transform: translateY(100%); will-change: transform;
+}
+.pt-logo { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; }
+.pt-mark {
+  width: clamp(60px, 9vw, 88px); aspect-ratio: 1;
+  background: linear-gradient(110deg, #1d1a17 0%, #1d1a17 40%, #f6f1e8 50%, #1d1a17 60%, #1d1a17 100%);
+  background-size: 250% 100%; background-position: 100% 0;
+  -webkit-mask: var(--logo) center/contain no-repeat; mask: var(--logo) center/contain no-repeat;
+}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap">
 </head>
@@ -2782,6 +2800,85 @@ document.addEventListener('mousemove', e => {
       }, 3000);
     }
   });
+</script>
+
+<!-- Page Transition Overlay -->
+<div class="pt" id="pt">
+  <div class="pt-panel"></div>
+  <div class="pt-logo"><div class="pt-mark" style="--logo:url(/favicon.png)"></div></div>
+</div>
+
+<script>
+(function(){
+  const pt = document.getElementById('pt');
+  if (!pt) return;
+  const panel = pt.querySelector('.pt-panel');
+  const logo = pt.querySelector('.pt-logo');
+  const mark = pt.querySelector('.pt-mark');
+  const DOWN = 'translateY(100%)', UP = 'translateY(-100%)', ZERO = 'translateY(0)';
+  const ease = 'cubic-bezier(.76,0,.24,1)';
+  const run = (el, f, d, delay = 0) => el.animate(f, { duration: d, delay, easing: ease, fill: 'forwards' });
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function cover() {
+    run(panel, [{ transform: DOWN }, { transform: ZERO }], 800);
+    run(logo, [{ opacity: 0, transform: 'translateY(24px) scale(.9)' }, { opacity: 1, transform: 'none' }], 600, 450);
+    mark.animate([{ backgroundPosition: '0% 0' }, { backgroundPosition: '100% 0' }],
+      { duration: 1000, delay: 800, easing: 'cubic-bezier(.45,0,.25,1)', fill: 'forwards' });
+    return new Promise(r => setTimeout(r, 1900));
+  }
+
+  function reveal() {
+    run(logo, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-40px)' }], 450, 0);
+    run(panel, [{ transform: ZERO }, { transform: UP }], 850, 250);
+  }
+
+  function hide() {
+    pt.getAnimations({ subtree: true }).forEach(a => a.cancel());
+    panel.style.transform = '';
+    logo.style.opacity = '';
+  }
+
+  if (sessionStorage.getItem('pt')) {
+    sessionStorage.removeItem('pt');
+    if (!reduce) {
+      panel.style.transform = ZERO;
+      logo.style.opacity = 1;
+      requestAnimationFrame(() => setTimeout(reveal, 120));
+    }
+  }
+
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.hasAttribute('download')) return;
+
+    // Project links, resume link, or internal navigation
+    const isProj = a.classList.contains('proj-link') || !!a.closest('.proj-links-wrap');
+    const isResume = a.id === 'resume-btn' || (a.getAttribute('href') && a.getAttribute('href').includes('resume.pdf'));
+    let isInternal = false;
+    try {
+      const u = new URL(a.href, location.href);
+      isInternal = (u.origin === location.origin) && !(u.pathname === location.pathname && u.search === location.search && u.hash);
+    } catch (_) {}
+
+    // Only apply transition for project links, resume link, or internal links
+    if (!isProj && !isResume && !isInternal) return;
+
+    // Skip target="_blank" only for other external non-project links
+    if (a.target && !isProj && !isResume) return;
+
+    if (reduce) return;
+    e.preventDefault();
+    cover().then(() => {
+      sessionStorage.setItem('pt', '1');
+      location.href = a.href;
+    });
+  });
+
+  addEventListener('pageshow', e => {
+    if (e.persisted) hide();
+  });
+})();
 </script>
 
 </body>

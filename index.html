@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -809,37 +809,37 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 
 @media (max-width: 1150px) {
   html {
-    display: block;
-    height: auto;
-    min-height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    display: block !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
     -webkit-text-size-adjust: 100%;
   }
   body {
-    display: block;
-    padding: max(0.6rem, env(safe-area-inset-top, 0.6rem)) max(0.5rem, env(safe-area-inset-right, 0.5rem)) max(0.6rem, env(safe-area-inset-bottom, 0.6rem)) max(0.5rem, env(safe-area-inset-left, 0.5rem));
-    height: auto;
-    min-height: 100%;
+    display: block !important;
+    padding: max(0.6rem, env(safe-area-inset-top, 0.6rem)) max(0.5rem, env(safe-area-inset-right, 0.5rem)) max(0.6rem, env(safe-area-inset-bottom, 0.6rem)) max(0.5rem, env(safe-area-inset-left, 0.5rem)) !important;
+    height: auto !important;
+    min-height: 100% !important;
     overflow: visible !important;
-    overflow-x: visible !important;
+    overflow-x: hidden !important;
     overflow-y: visible !important;
     -webkit-text-size-adjust: 100%;
   }
   .pg { 
-    width: 100%;
-    box-sizing: border-box; 
-    border-radius: 24px; 
-    border: 1px solid rgba(255,255,255,0.7);
+    width: 100% !important;
+    box-sizing: border-box !important; 
+    border-radius: 24px !important; 
+    border: 1px solid rgba(255,255,255,0.7) !important;
     box-shadow: 
       0 20px 40px rgba(90, 70, 50, 0.08), 
       inset 0 1px 0 rgba(255, 255, 255, 0.9),
       inset 0 -1px 0 rgba(255, 255, 255, 0.2),
-      inset 0 0 20px rgba(255, 255, 255, 0.6);
-    min-height: calc(100dvh - 1.2rem);
-    height: auto;
-    max-height: none;
-    padding: 2.25rem 1.4rem 2.5rem;
+      inset 0 0 20px rgba(255, 255, 255, 0.6) !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 2.25rem 1.4rem 2.5rem !important;
   }
   .col-wrap {
     grid-template-columns: 1fr;
@@ -928,7 +928,7 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   position: fixed;
   inset: 0;
   width: 100%;
-  height: 100%;
+  height: 100dvh;
   background: rgba(245, 240, 235, 0.25);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -937,8 +937,9 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   justify-content: center;
   align-items: center;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   touch-action: none;
@@ -946,6 +947,7 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 }
 .modal-overlay.active {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 .modal-card {
@@ -1706,6 +1708,7 @@ textarea.form-input {
 /* Mobile Modals, Inputs & Forms (< 768px) */
 @media (max-width: 768px) {
   .modal-overlay {
+    height: 100dvh !important;
     padding: max(1rem, env(safe-area-inset-top, 1rem)) 0.75rem max(1rem, env(safe-area-inset-bottom, 1rem)) !important;
   }
   .modal-card, .social-modal-card, .newsletter-modal-card {
@@ -1715,8 +1718,8 @@ textarea.form-input {
     border-radius: 24px !important;
     max-height: min(85dvh, 88vh) !important;
     overflow-y: auto !important;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
     touch-action: pan-y;
     box-sizing: border-box !important;
   }
@@ -2280,21 +2283,25 @@ document.addEventListener('mousemove', e => {
 </div>
 
 <script>
-  // Modal Scroll Lock helper for iOS Safari & Mobile
-  // Note: On iOS Safari, modifying overflow or position on html/body causes WebKit
-  // to detect an unscrollable document, forcibly expanding the system address and navigation toolbars.
-  // We keep body/html untouched and isolate scrolling completely via touch-action & overlay touch prevention.
-  function lockBodyScroll() {
-    // Keep html/body completely untouched so Safari stays in minimal fullscreen UI
-  }
-
-  function unlockBodyScroll() {
-    // If closed via user tap while at top, nudge scroll 1px down to allow Safari minimal UI to engage
-    if (window.scrollY === 0 && window.innerWidth <= 768) {
-      setTimeout(() => {
-        try { window.scrollBy(0, 1); } catch (e) {}
-      }, 60);
+  // iOS Safari Minimal UI / Toolbar Recalculation Nudge
+  function closeCardNudge() {
+    // 1. Immediately blur all active/focused elements to release iOS Safari keyboard and accessory bar locks
+    if (document.activeElement && typeof document.activeElement.blur === 'function') {
+      try { document.activeElement.blur(); } catch (_) {}
     }
+    document.querySelectorAll('input, textarea, button, a').forEach(el => {
+      try { el.blur(); } catch (_) {}
+    });
+
+    // 2. Point 5: Nudge Safari scroll view by 1px so Safari's native scroll handler evaluates
+    // the document and smoothly collapses the top address bar and bottom navigation toolbar.
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      window.scrollTo(window.scrollX, y + 1);
+      requestAnimationFrame(() => {
+        window.scrollTo(window.scrollX, y);
+      });
+    });
   }
 
   // Prevent background drag on modal overlays without triggering Safari bar expansion
@@ -2311,15 +2318,16 @@ document.addEventListener('mousemove', e => {
   const openModalBtn = document.getElementById('open-modal-btn');
   const closeModalBtn = document.getElementById('close-modal-btn');
 
-  function openModal() {
+  function openModal(e) {
+    if (e && e.currentTarget && typeof e.currentTarget.blur === 'function') {
+      try { e.currentTarget.blur(); } catch (_) {}
+    }
     modalOverlay.classList.add('active');
-    lockBodyScroll();
   }
 
   function closeModal() {
-    document.querySelectorAll('#contact-modal input, #contact-modal textarea').forEach(el => el.blur());
     modalOverlay.classList.remove('active');
-    unlockBodyScroll();
+    closeCardNudge();
   }
 
   openModalBtn.addEventListener('click', openModal);
@@ -2356,15 +2364,17 @@ document.addEventListener('mousemove', e => {
     }
   }
 
-  function openSocialModal() {
+  function openSocialModal(e) {
+    if (e && e.currentTarget && typeof e.currentTarget.blur === 'function') {
+      try { e.currentTarget.blur(); } catch (_) {}
+    }
     showSocialMain();
     socialModalOverlay.classList.add('active');
-    lockBodyScroll();
   }
 
   function closeSocialModal() {
     socialModalOverlay.classList.remove('active');
-    unlockBodyScroll();
+    closeCardNudge();
     setTimeout(showSocialMain, 250);
   }
 
@@ -2544,10 +2554,12 @@ document.addEventListener('mousemove', e => {
     }
   }
 
-  function openNewsletterModal() {
+  function openNewsletterModal(e) {
+    if (e && e.currentTarget && typeof e.currentTarget.blur === 'function') {
+      try { e.currentTarget.blur(); } catch (_) {}
+    }
     if (newsletterModalOverlay) {
       newsletterModalOverlay.classList.add('active');
-      lockBodyScroll();
       if (newsletterEmail && window.innerWidth > 768) {
         setTimeout(() => newsletterEmail.focus(), 150);
       }
@@ -2555,10 +2567,9 @@ document.addEventListener('mousemove', e => {
   }
 
   function closeNewsletterModal() {
-    if (newsletterEmail) newsletterEmail.blur();
     if (newsletterModalOverlay) {
       newsletterModalOverlay.classList.remove('active');
-      unlockBodyScroll();
+      closeCardNudge();
       setTimeout(() => {
         liquidReset();
         if (newsletterLoaderWrap) newsletterLoaderWrap.style.display = 'none';

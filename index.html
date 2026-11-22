@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="google-site-verification" content="Y0gzv2c4mXbOtflkVnxs0I-YmOrG7yTsjCwm0vrzAQc" />
 
@@ -917,7 +920,6 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   inset: 0;
   width: 100%;
   height: 100%;
-  height: 100dvh;
   background: rgba(245, 240, 235, 0.25);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -930,6 +932,7 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
   transition: opacity 0.4s ease;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+  touch-action: none;
   box-sizing: border-box;
 }
 .modal-overlay.active {
@@ -1705,6 +1708,7 @@ textarea.form-input {
     overflow-y: auto !important;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
     box-sizing: border-box !important;
   }
   .modal-title {
@@ -2249,29 +2253,27 @@ document.addEventListener('mousemove', e => {
 </div>
 
 <script>
-  // Modal Scroll Lock helper for iOS Safari & Mobile (clean overflow lock without scroll displacement)
-  let activeModalCount = 0;
-
+  // Modal Scroll Lock helper for iOS Safari & Mobile
+  // Note: On iOS Safari, modifying overflow or position on html/body causes WebKit
+  // to detect an unscrollable document, forcibly expanding the system address and navigation toolbars.
+  // We keep body/html untouched and isolate scrolling completely via touch-action & overlay touch prevention.
   function lockBodyScroll() {
-    activeModalCount++;
-    if (activeModalCount === 1) {
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    }
+    // Keep html/body completely untouched so Safari stays in minimal fullscreen UI
   }
 
   function unlockBodyScroll() {
-    activeModalCount = Math.max(0, activeModalCount - 1);
-    if (activeModalCount === 0) {
-      document.body.style.removeProperty('overflow');
-      document.documentElement.style.removeProperty('overflow');
+    // If closed via user tap while at top, nudge scroll 1px down to allow Safari minimal UI to engage
+    if (window.scrollY === 0 && window.innerWidth <= 768) {
+      setTimeout(() => {
+        try { window.scrollBy(0, 1); } catch (e) {}
+      }, 60);
     }
   }
 
   // Prevent background drag on modal overlays without triggering Safari bar expansion
   document.querySelectorAll('.modal-overlay').forEach(overlay => {
     overlay.addEventListener('touchmove', (e) => {
-      if (e.target === overlay) {
+      if (!e.target.closest('.modal-card')) {
         e.preventDefault();
       }
     }, { passive: false });

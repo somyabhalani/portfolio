@@ -422,17 +422,17 @@ body {
     </div>
   </div>
 
-  <!-- State 4: Subscription Not Found / Manual Form -->
+  <!-- State 4: Subscription Form / Manual Lookup -->
   <div id="panel-notfound" class="status-panel">
     <div class="badge-icon info">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+        <polyline points="22,6 12,13 2,6"></polyline>
       </svg>
     </div>
-    <div class="panel-headline">Subscription Not Found</div>
-    <p class="panel-desc">
-      We couldn't locate an active subscription for this link. Enter your email below to unsubscribe:
+    <div class="panel-headline" id="notfound-headline">Unsubscribe from Beneath the Curve</div>
+    <p class="panel-desc" id="notfound-desc">
+      Enter your email address below to unsubscribe:
     </p>
 
     <form id="manual-unsub-form" style="width: 100%; display: flex; flex-direction: column; align-items: center;" onsubmit="return false;">
@@ -548,9 +548,14 @@ body {
   const SUPABASE_URL = 'https://xczkteabzfbjhveqxsoy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_sGpA3rcMQ1__igEYHqKHsQ_3GFaJEy-';
 
+  const notfoundHeadline = document.getElementById('notfound-headline');
+  const notfoundDesc = document.getElementById('notfound-desc');
+
   async function verifySubscriber() {
     try {
       if (!tokenParam && !emailParam) {
+        if (notfoundHeadline) notfoundHeadline.textContent = 'Unsubscribe from Beneath the Curve';
+        if (notfoundDesc) notfoundDesc.textContent = 'Enter your email address below to unsubscribe:';
         showPanel('notfound');
         return;
       }
@@ -570,12 +575,16 @@ body {
       });
 
       if (!res.ok) {
+        if (notfoundHeadline) notfoundHeadline.textContent = 'Subscription Not Found';
+        if (notfoundDesc) notfoundDesc.textContent = "We couldn't locate an active subscription for this link. Enter your email below to unsubscribe:";
         showPanel('notfound');
         return;
       }
 
       const data = await res.json();
       if (!data || data.length === 0) {
+        if (notfoundHeadline) notfoundHeadline.textContent = 'Subscription Not Found';
+        if (notfoundDesc) notfoundDesc.textContent = "We couldn't locate an active subscription for this link. Enter your email below to unsubscribe:";
         showPanel('notfound');
         return;
       }

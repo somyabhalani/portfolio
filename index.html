@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="google-site-verification" content="Y0gzv2c4mXbOtflkVnxs0I-YmOrG7yTsjCwm0vrzAQc" />
 
@@ -805,7 +805,15 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 }
 
 @media (max-width: 1150px) {
-  body, html { display: block; padding: 0.75rem 0.5rem; height: auto; overflow-x: hidden; overflow-y: auto; }
+  body, html {
+    display: block;
+    padding: max(0.6rem, env(safe-area-inset-top, 0.6rem)) max(0.5rem, env(safe-area-inset-right, 0.5rem)) max(0.6rem, env(safe-area-inset-bottom, 0.6rem)) max(0.5rem, env(safe-area-inset-left, 0.5rem));
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-text-size-adjust: 100%;
+  }
   .pg { 
     width: 100%;
     box-sizing: border-box; 
@@ -816,10 +824,10 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
       inset 0 1px 0 rgba(255, 255, 255, 0.9),
       inset 0 -1px 0 rgba(255, 255, 255, 0.2),
       inset 0 0 20px rgba(255, 255, 255, 0.6);
-    min-height: calc(100vh - 1.5rem);
+    min-height: calc(100dvh - 1.2rem);
     height: auto;
     max-height: none;
-    padding: 2.5rem 1.5rem;
+    padding: 2.25rem 1.4rem 2.5rem;
   }
   .col-wrap {
     grid-template-columns: 1fr;
@@ -906,16 +914,23 @@ a, button, [role="button"], .proj, .location-swap, .contact-email, .left-link {
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(245, 240, 235, 0.2);
-  backdrop-filter: blur(8px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  background: rgba(245, 240, 235, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.4s ease;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 .modal-overlay.active {
   opacity: 1;
@@ -1671,10 +1686,64 @@ textarea.form-input {
   font-weight: 500;
 }
 
+/* Universal touch optimization */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile Modals, Inputs & Forms (< 768px) */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: max(1rem, env(safe-area-inset-top, 1rem)) 0.75rem max(1rem, env(safe-area-inset-bottom, 1rem)) !important;
+  }
+  .modal-card, .social-modal-card, .newsletter-modal-card {
+    width: min(92vw, 440px) !important;
+    max-width: 92vw !important;
+    padding: 1.85rem 1.4rem 1.6rem !important;
+    border-radius: 24px !important;
+    max-height: min(85dvh, 88vh) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box !important;
+  }
+  .modal-title {
+    font-size: 26px !important;
+    margin-bottom: 1.1rem !important;
+    line-height: 1.2 !important;
+  }
+  .modal-close {
+    top: 1rem !important;
+    right: 1.15rem !important;
+    font-size: 26px !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .form-group {
+    margin-bottom: 0.95rem !important;
+  }
+  /* CRITICAL: 16px font-size prevents iOS Safari from auto-zooming on focus */
+  .form-input, input, textarea, select {
+    font-size: 16px !important;
+    padding: 0.55rem 0 !important;
+  }
+  textarea.form-input {
+    height: 48px !important;
+  }
+  .form-submit, .newsletter-submit-btn {
+    padding: 0.85rem 1.8rem !important;
+    font-size: 12px !important;
+    letter-spacing: 0.12em !important;
+  }
+}
+
 @media (max-width: 600px) {
-  .social-modal-card, .newsletter-modal-card {
-    padding: 1.85rem 1.35rem 1.6rem !important;
-    width: 92% !important;
+  .modal-card, .social-modal-card, .newsletter-modal-card {
+    width: 93% !important;
+    padding: 1.75rem 1.25rem 1.5rem !important;
   }
 }
 </style>
@@ -2180,6 +2249,38 @@ document.addEventListener('mousemove', e => {
 </div>
 
 <script>
+  // Modal Scroll Lock helper for iOS Safari & Mobile (prevents viewport shifting/bar summons)
+  let activeModalCount = 0;
+  let savedScrollY = 0;
+
+  function lockBodyScroll() {
+    activeModalCount++;
+    if (activeModalCount === 1) {
+      savedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${savedScrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    }
+  }
+
+  function unlockBodyScroll() {
+    activeModalCount = Math.max(0, activeModalCount - 1);
+    if (activeModalCount === 0) {
+      document.body.style.removeProperty('position');
+      document.body.style.removeProperty('top');
+      document.body.style.removeProperty('left');
+      document.body.style.removeProperty('right');
+      document.body.style.removeProperty('width');
+      document.body.style.removeProperty('overflow');
+      document.documentElement.style.removeProperty('overflow');
+      window.scrollTo(0, savedScrollY);
+    }
+  }
+
   // Modal Logic
   const modalOverlay = document.getElementById('contact-modal');
   const openModalBtn = document.getElementById('open-modal-btn');
@@ -2187,12 +2288,12 @@ document.addEventListener('mousemove', e => {
 
   function openModal() {
     modalOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden'; // prevent background scrolling
+    lockBodyScroll();
   }
 
   function closeModal() {
     modalOverlay.classList.remove('active');
-    document.body.style.overflow = '';
+    unlockBodyScroll();
   }
 
   openModalBtn.addEventListener('click', openModal);
@@ -2232,12 +2333,12 @@ document.addEventListener('mousemove', e => {
   function openSocialModal() {
     showSocialMain();
     socialModalOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
   }
 
   function closeSocialModal() {
     socialModalOverlay.classList.remove('active');
-    document.body.style.overflow = '';
+    unlockBodyScroll();
     setTimeout(showSocialMain, 250);
   }
 
@@ -2420,18 +2521,20 @@ document.addEventListener('mousemove', e => {
   function openNewsletterModal() {
     if (newsletterModalOverlay) {
       newsletterModalOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      lockBodyScroll();
       if (window.location.hash !== '#beneath-the-curve') {
         history.replaceState(null, '', '#beneath-the-curve');
       }
-      if (newsletterEmail) setTimeout(() => newsletterEmail.focus(), 150);
+      if (newsletterEmail && window.innerWidth > 768) {
+        setTimeout(() => newsletterEmail.focus(), 150);
+      }
     }
   }
 
   function closeNewsletterModal() {
     if (newsletterModalOverlay) {
       newsletterModalOverlay.classList.remove('active');
-      document.body.style.overflow = '';
+      unlockBodyScroll();
       if (window.location.hash === '#beneath-the-curve' || window.location.hash === '#newsletter' || window.location.hash === '#beneath') {
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }

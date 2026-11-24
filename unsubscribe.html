@@ -702,7 +702,7 @@ body {
     } catch (e) {
       const isNetworkErr = !navigator.onLine || (e.message && e.message.includes('Failed to fetch'));
       const msg = isNetworkErr
-        ? 'Could not connect to the database right now (Supabase is reporting a technical issue / service degradation). Please try again in a moment, or contact hello@somyabhalani.com directly.'
+        ? 'Could not connect to the database right now (Supabase is reporting a technical issue / service degradation). Please try again in a moment, or contact somyabhalani@gmail.com directly.'
         : ('Could not complete unsubscribe: ' + (e.message || e));
       alert(msg);
       showPanel(currentSubscriber && currentSubscriber.id ? 'confirm' : 'notfound');

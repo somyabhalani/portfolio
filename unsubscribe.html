@@ -569,6 +569,21 @@ body {
   const notfoundHeadline = document.getElementById('notfound-headline');
   const notfoundDesc = document.getElementById('notfound-desc');
 
+  // Resilient fetch with automatic retry for intermittent network/service blips
+  async function fetchWithRetry(url, options = {}, retries = 2, delay = 1000) {
+    for (let i = 0; i <= retries; i++) {
+      try {
+        const res = await fetch(url, options);
+        if (res.ok || res.status < 500) return res;
+        if (i < retries) await new Promise(r => setTimeout(r, delay));
+      } catch (err) {
+        if (i === retries) throw err;
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+    return fetch(url, options);
+  }
+
   async function verifySubscriber() {
     try {
       if (!tokenParam && !emailParam) {
@@ -585,7 +600,7 @@ body {
         url += `&email=eq.${encodeURIComponent(emailParam.toLowerCase().trim())}`;
       }
 
-      const res = await fetch(url, {
+      const res = await fetchWithRetry(url, {
         headers: {
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
@@ -627,7 +642,7 @@ body {
 
     const unsubscribeTask = (async () => {
       if (currentSubscriber && currentSubscriber.id) {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${currentSubscriber.id}`, {
+        const res = await fetchWithRetry(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${currentSubscriber.id}`, {
           method: 'PATCH',
           headers: {
             'apikey': SUPABASE_ANON_KEY,
@@ -643,7 +658,7 @@ body {
           throw new Error('Could not update status. Please try again.');
         }
       } else if (email) {
-        const checkRes = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(email.toLowerCase().trim())}`, {
+        const checkRes = await fetchWithRetry(`${SUPABASE_URL}/rest/v1/subscribers?email=eq.${encodeURIComponent(email.toLowerCase().trim())}`, {
           headers: {
             'apikey': SUPABASE_ANON_KEY,
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
@@ -651,7 +666,7 @@ body {
         });
         const existing = checkRes.ok ? await checkRes.json() : [];
         if (existing && existing.length > 0) {
-          await fetch(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${existing[0].id}`, {
+          await fetchWithRetry(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${existing[0].id}`, {
             method: 'PATCH',
             headers: {
               'apikey': SUPABASE_ANON_KEY,
@@ -664,7 +679,7 @@ body {
             })
           });
         } else {
-          await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
+          await fetchWithRetry(`${SUPABASE_URL}/rest/v1/subscribers`, {
             method: 'POST',
             headers: {
               'apikey': SUPABASE_ANON_KEY,
@@ -685,15 +700,19 @@ body {
     try {
       await withLoader(unsubscribeTask);
     } catch (e) {
-      alert('Could not complete unsubscribe: ' + (e.message || e));
-      showPanel('confirm');
+      const isNetworkErr = !navigator.onLine || (e.message && e.message.includes('Failed to fetch'));
+      const msg = isNetworkErr
+        ? 'Could not connect to the database right now (Supabase is reporting a technical issue / service degradation). Please try again in a moment, or contact hello@somyabhalani.com directly.'
+        : ('Could not complete unsubscribe: ' + (e.message || e));
+      alert(msg);
+      showPanel(currentSubscriber && currentSubscriber.id ? 'confirm' : 'notfound');
     }
   }
 
   // Handle Re-subscribe Action
   async function performResubscribe() {
     if (currentSubscriber && currentSubscriber.id) {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${currentSubscriber.id}`, {
+      const res = await fetchWithRetry(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${currentSubscriber.id}`, {
         method: 'PATCH',
         headers: {
           'apikey': SUPABASE_ANON_KEY,
